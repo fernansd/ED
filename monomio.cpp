@@ -1,8 +1,8 @@
 #include "monomio.hpp"
 
 using namespace std;
-using namespace ed;
 
+namespace ed{
 Monomio& Monomio::operator=(const Monomio &m) {
     grado_ = m.grado_;
     coeficiente_ = m.coeficiente_;
@@ -30,8 +30,6 @@ Monomio Monomio::operator*(const Monomio &m) {
 
 }
 
-
-namespace ed{
 istream &operator>>(istream &stream, Monomio &m) {
     cout << "Introduce el coeficiente: ";
     stream >> m.coeficiente_;
@@ -39,9 +37,9 @@ istream &operator>>(istream &stream, Monomio &m) {
     stream >> m.grado_;
 }
 
-ostream &operator<<(ostream &stream, Monomio &m) {
+ostream &operator<<(ostream &stream, Monomio const &m) {
     stream << m.getCoeficiente();
     stream << "x^" << m.getGrado();
 }
 
-}
+} // Fin namespace
