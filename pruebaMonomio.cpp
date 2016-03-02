@@ -3,14 +3,21 @@
 
 #include "monomio.hpp"
 #include "monomioInterfaz.hpp"
+#include "monomio.cpp"
 using namespace ed;
+
+//Prototipos
 int menu();
 
 int main () {
 
       int opcion = 0;
+
+      Monomio m1(3,4), m2(m1), m3;
+      std::cout << "\nValor de los tres monomio: " << m1 << ", ";
+	  std::cout << m2 << ", " << m3 << "\n\n\n";
+
       while(opcion != 3) {
-	    Monomio m1(3,4), m2(3,4), m3;
 	    opcion = menu();
 
 	    switch (opcion) {
@@ -29,7 +36,8 @@ int main () {
                     std::cout << "Lectura segundo monomio: \n";
                     std::cin >> m2;
                     m3 = m2*m1;
-                    std::cout << "Valor del producto: " << m3 << std::endl;
+                    std::cout << "Valor del producto: " << m1 << " * " << m2 <<
+                        " = " << m3;
 
 		    break;
 		case 3:
