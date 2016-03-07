@@ -5,6 +5,8 @@
 
 #include "monomio.hpp"
 
+using namespace std;
+
 namespace ed {
     class PolinomioInterfaz {
     public:
