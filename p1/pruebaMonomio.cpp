@@ -2,8 +2,7 @@
 #include <cmath>
 
 #include "monomio.hpp"
-#include "monomioInterfaz.hpp"
-#include "monomio.cpp"
+
 using namespace ed;
 
 //Prototipos

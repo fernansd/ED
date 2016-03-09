@@ -1,6 +1,8 @@
 #ifndef POLINOMIO_HPP
 #define POLINOMIO_HPP
 
+#include <iostream>
+
 #include "polinomioInterfaz.hpp"
 
 namespace ed {
@@ -15,20 +17,20 @@ namespace ed {
         Polinomio() {
             grado_ = 0;
             n_monomios_ = 0;
-            polinomio_.erase();
+            polinomio_.clear();
         }
         
         int getGrado() const{ return grado_; }
         
-        void setGrado(int grado);
+        void setGrado(int grado) { grado_ = grado; }
         
         int getNumeroMonomios() const { return n_monomios_; }
                 
-        Monomio getMonomio(int grado) { return polinomio_[grado]; }
+        Monomio getMonomio(int grado);
         
         void setMonomio(int grado, float coeficiente);
         
-        bool estaVacio() { polinomio_.empty(); }
+        bool estaVacio() { return polinomio_.empty(); }
         
         void leerPolinomio();
         

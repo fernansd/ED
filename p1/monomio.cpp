@@ -3,6 +3,7 @@
 using namespace std;
 
 namespace ed{
+
 Monomio& Monomio::operator=(const Monomio &m) {
     grado_ = m.grado_;
     coeficiente_ = m.coeficiente_;

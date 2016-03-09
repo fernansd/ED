@@ -1,7 +1,6 @@
 #ifndef POLINOMIOINTERFAZ_HPP
 #define POLINOMIOINTERFAZ_HPP
 
-#include <iostream>
 #include <vector>
 
 #include "monomio.hpp"
@@ -19,6 +18,8 @@ namespace ed {
 
         /// No incluye los monomios nulos
         virtual int getNumeroMonomios() const = 0;
+        
+        virtual void setNumeroMonomios() = 0;
                 
         virtual Monomio getMonomio(int grado) const = 0;
 
