@@ -4,24 +4,22 @@ using std::cin;
 
 namespace ed {
 
-    void setGrado(int grado) {
+    void Polinomio::setGrado(int grado) {
         if ( grado < grado_ )
             polinomio_.resize(grado);
     }
 
-    vector<Monomio> getPolinomio();
-
-    void setMonomio(int grado, float coeficiente) {
+    void Polinomio::setMonomio(int grado, float coeficiente) {
         if ( grado <= grado_ ) {
-            polinomio_[grado].
+            Monomio m = polinomio_[grado];
         }
     }
 
-    void leerPolinomio() {
+    void Polinomio::leerPolinomio() {
         cout << "Introducir grado";
     }
 
-    void escribirPolinomio();
+    void Polinomio::escribirPolinomio();
 
     Polinomio &operator=(Polinomio const &p) {
         grado_ = p.grado_;
@@ -29,14 +27,14 @@ namespace ed {
         polinomio_  = p.polinomio_;
     }
 
-    Polinomio operator*(Polinomio const &p);
+    Polinomio Polinomio::operator*(Polinomio const &p);
 
-    Polinomio operator+(Polinomio const &p);
+    Polinomio Polinomio::operator+(Polinomio const &p);
 
     float getValorPolinomio(int x);
 
-    friend istream &operator>>(istream &stream, Polinomio &p);
+    istream &operator>>(istream &stream, Polinomio &p);
 
-    friend ostream &operator<<(ostream &stream, Polinomio const &p);
+    ostream &operator<<(ostream &stream, Polinomio const &p);
 
 }

@@ -14,18 +14,16 @@ namespace ed {
     public:
         Polinomio() {
             grado_ = 0;
-            n_monomios = 0;
+            n_monomios_ = 0;
             polinomio_.erase();
         }
         
-        int getGrado() { return grado_; }
+        int getGrado() const{ return grado_; }
         
         void setGrado(int grado);
         
-        int getNumeroMonomios() { return n_monomios_; }
-        
-        vector<Monomio> getPolinomio() { return polinomio_; }
-        
+        int getNumeroMonomios() const { return n_monomios_; }
+                
         Monomio getMonomio(int grado) { return polinomio_[grado]; }
         
         void setMonomio(int grado, float coeficiente);
@@ -40,7 +38,7 @@ namespace ed {
         
         Polinomio operator*(Polinomio const &p);
         
-        Polinomio operator+(Polinomio const &p);
+        Polinomio& operator+(Polinomio const &p);
         
         float getValorPolinomio(int x);
         
