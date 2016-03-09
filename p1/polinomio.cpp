@@ -19,19 +19,27 @@ namespace ed {
         cout << "Introducir grado";
     }
 
-    void Polinomio::escribirPolinomio();
+    void Polinomio::escribirPolinomio() {
+    	cout << "Por Implementar" << endl;
+    }
 
-    Polinomio &operator=(Polinomio const &p) {
+    Polinomio& Polinomio::operator=(Polinomio const &p) {
         grado_ = p.grado_;
         n_monomios_ = p.n_monomios_;
         polinomio_  = p.polinomio_;
     }
 
-    Polinomio Polinomio::operator*(Polinomio const &p);
+    Polinomio operator*(Polinomio const &p) {
+    	cout << "Por Implementar" << endl;
+    }
 
-    Polinomio Polinomio::operator+(Polinomio const &p);
+    Polinomio operator+(Polinomio const &p) {
+    	cout << "Por Implementar" << endl;
+    }
 
-    float getValorPolinomio(int x);
+    float getValorPolinomio(int x) {
+    	cout << "Por Implementar" << endl;
+    }
 
     istream &operator>>(istream &stream, Polinomio &p);
 

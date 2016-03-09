@@ -38,7 +38,7 @@ namespace ed {
         
         Polinomio operator*(Polinomio const &p);
         
-        Polinomio& operator+(Polinomio const &p);
+        Polinomio operator+(Polinomio const &p);
         
         float getValorPolinomio(int x);
         
