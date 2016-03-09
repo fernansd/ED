@@ -7,6 +7,7 @@ namespace ed{
 Monomio& Monomio::operator=(const Monomio &m) {
     grado_ = m.grado_;
     coeficiente_ = m.coeficiente_;
+    return *this;
 }
 
 void Monomio::leerMonomio() {
@@ -36,11 +37,15 @@ istream &operator>>(istream &stream, Monomio &m) {
     stream >> m.coeficiente_;
     cout << "Introduce el grado: ";
     stream >> m.grado_;
+
+    return stream;
 }
 
 ostream &operator<<(ostream &stream, Monomio const &m) {
     stream << m.getCoeficiente();
     stream << "x^" << m.getGrado();
+    
+    return stream;
 }
 
 } // Fin namespace

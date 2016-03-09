@@ -2,7 +2,7 @@
 
 CC = g++
 CFLAGS = -c -Wall -g
-CPPFLAGS = -g -Wall -ansi
+CPPFLAGS = -g -Wall
 INCLUDES = #-I.
 LFLAGS = #-L.
 LIBS = #-lrt #-lpthread
@@ -15,11 +15,11 @@ all:    $(MAIN)
 %.o:	%.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $<  -o $@
 	
-pruebaMonomio.out: pruebaMonomio.cpp monomio.cpp
-	$(CC) $(CPPFLAGS) pruebaMonomio.cpp monomio.o -o $@
+pruebaMonomio.out: pruebaMonomio.cpp monomio.o
+	$(CC) $(CPPFLAGS) $^ -o $@
 	
-pruebaPolinomio.out: pruebaPolinomio.cpp polinomio.cpp
-	$(CC) $(CPPFLAGS) pruebaPolinomio.cpp polinomio.o -o $@
+pruebaPolinomio.out: pruebaPolinomio.cpp polinomio.o monomio.o
+	$(CC) $(CPPFLAGS) $^ -o $@
 
 clean:
 	$(RM) *.o *~ $(MAIN) log-*.txt

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "polinomioInterfaz.hpp"
+#include "monomio.hpp"
 
 namespace ed {
 
@@ -12,40 +13,44 @@ namespace ed {
         int grado_;
         int n_monomios_; /// No considera los monomios nulos
         vector<Monomio> polinomio_;
-        
+
+        // Funciones privadas
+        void setGrado(int grado) { grado_ = grado; }
+
+        void setNumeroMonomios(int num) { n_monomios_ = num; }
+
     public:
         Polinomio() {
             grado_ = 0;
             n_monomios_ = 0;
             polinomio_.clear();
+            polinomio_.reserve(10); // Reservamos un espacio inicial de vector
         }
-        
+
         int getGrado() const{ return grado_; }
-        
-        void setGrado(int grado) { grado_ = grado; }
-        
+
         int getNumeroMonomios() const { return n_monomios_; }
-                
-        Monomio getMonomio(int grado);
-        
+
+        Monomio getMonomio (int grado);
+
         void setMonomio(int grado, float coeficiente);
-        
+
         bool estaVacio() { return polinomio_.empty(); }
-        
+
         void leerPolinomio();
-        
+
         void escribirPolinomio();
-        
+
         Polinomio &operator=(Polinomio const &p);
-        
+
         Polinomio operator*(Polinomio const &p);
-        
+
         Polinomio operator+(Polinomio const &p);
-        
+
         float getValorPolinomio(int x);
-        
+
         friend istream &operator>>(istream &stream, Polinomio &p);
-        
+
         friend ostream &operator<<(ostream &stream, Polinomio const &p);
     };
 
