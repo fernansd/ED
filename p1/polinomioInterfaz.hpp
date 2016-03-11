@@ -26,7 +26,7 @@ namespace ed {
 
         virtual void setMonomio(float coeficiente, int grado) = 0;
         
-        virtual bool estaVacio() = 0;
+        virtual bool estaVacio() const = 0;
 
     };
 }

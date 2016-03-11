@@ -33,9 +33,9 @@ namespace ed {
 
         Monomio getMonomio (int grado);
 
-        void setMonomio(float coeficiente, int grado);
+        void setMonomio (float coeficiente, int grado);
 
-        bool estaVacio() { return polinomio_.empty(); }
+        bool estaVacio() const { return polinomio_.empty(); }
 
         void leerPolinomio();
 

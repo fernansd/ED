@@ -16,13 +16,13 @@ namespace ed {
             return false;        
     }
 
-    void Polinomio::setMonomio(float coeficiente, int grado) {
+    void Polinomio::setMonomio (float coeficiente, int grado) {
         if ( coeficiente == 0 )
             return; // Sale en el caso de que el monomio valga 0
         
         Monomio m(coeficiente, grado);
         
-        if ( estaVacio() ) {
+        if ( this->estaVacio() ) {
             polinomio_.push_back(m);
             Polinomio::setNumeroMonomios(1);
 
@@ -77,7 +77,29 @@ namespace ed {
     }
 
     void Polinomio::escribirPolinomio() {
-        cout << *this; // Usa la sobrecarga del operador <<, definida más abajo
+        cout << endl; // Deja espacio por encima del mensaje
+    	
+    	if ( estaVacio() ) {
+    	    cout << "\tEl polinomio esta vacío" << endl;
+    	    return;
+        }
+        
+    	cout << "\tTérminos del polinomio:  ";
+    	for(int i = 0; i < n_monomios_; i++) {
+    	
+    	    // Omite los términos con coeficiente 0 a propósito
+    		if (polinomio_[i].getCoeficiente() > 0) {
+    		    cout << " + " << polinomio_[i];
+    		} else if (polinomio_[i].getCoeficiente() < 0) {
+    		    Monomio m = polinomio_[i];
+    		    m.setCoeficiente(m.getCoeficiente() * (-1));
+    		    cout << " - " << m;
+    		} else if ( i == 0 ) {
+    		    cout << polinomio_[i];
+    		}
+    	}
+    	
+    	cout << endl;
     }
 
     float Polinomio::getValorPolinomio(int x) {
@@ -144,13 +166,13 @@ namespace ed {
         }
         
     	cout << "\tTérminos del polinomio:  ";
-    	for(int i = 0; i < p.n_monomios_; i++) {
-    		stream << p.polinomio_[i] << " ";
-    		if (p.polinomio_[i+1].getCoeficiente() > 0
-    		    && p.polinomio_[i] != p.polinomio_.back()) {
-    		    stream << "+";
-    		}
-    	}
+//    	for(int i = 0; i < p.n_monomios_; i++) {
+//    		stream << p.polinomio_[i] << " ";
+//    		if ( p.polinomio_[i+1].getCoeficiente() > 0
+//    		     && i != (p.n_monomios_ - 1) ) {
+//    		    stream << "+";
+//    		}
+//    	}
     	
     	stream << endl;
 
