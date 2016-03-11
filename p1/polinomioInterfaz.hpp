@@ -24,7 +24,7 @@ namespace ed {
 
         virtual Monomio getMonomio(int grado) = 0;
 
-        virtual void setMonomio(int grado, float coeficiente) = 0;
+        virtual void setMonomio(float coeficiente, int grado) = 0;
         
         virtual bool estaVacio() = 0;
 

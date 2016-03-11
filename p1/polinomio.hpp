@@ -33,7 +33,7 @@ namespace ed {
 
         Monomio getMonomio (int grado);
 
-        void setMonomio(int grado, float coeficiente);
+        void setMonomio(float coeficiente, int grado);
 
         bool estaVacio() { return polinomio_.empty(); }
 

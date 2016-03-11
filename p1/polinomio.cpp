@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 
 #include "polinomio.hpp"
 
@@ -6,36 +7,56 @@ using std::cout;
 using std::cin;
 
 namespace ed {
+    // Función necesaria para usar la función std::sort() que ordena el vector
+    // debe devolver true cuando el primer argumento precede al segundo en orden
+    bool comparacionMonomio(const Monomio& m1, const Monomio& m2) {
+        if (m1.getGrado() < m2.getGrado())
+            return true;
+        else
+            return false;        
+    }
 
-    void Polinomio::setMonomio(int grado, float coeficiente) {
+    void Polinomio::setMonomio(float coeficiente, int grado) {
+        if ( coeficiente == 0 )
+            return; // Sale en el caso de que el monomio valga 0
+        
+        Monomio m(coeficiente, grado);
+        
         if ( estaVacio() ) {
-            Monomio m(grado, coeficiente);
             polinomio_.push_back(m);
-            setNumeroMonomios(1);
+            Polinomio::setNumeroMonomios(1);
 
-        } else if ( grado <= grado_ ) {
-            int encontrado = 0;
-            for(int i = 0; i < n_monomios_; i++) {
-                if (polinomio_[i].getGrado() == grado) {
-                     polinomio_[i].setCoeficiente(coeficiente);
-                     break;
+        } else if ( grado > Polinomio::getGrado() ) {
+            polinomio_.push_back(m);
+            n_monomios_++;            
+            
+        } else { // En caso de que el grado sea mayor que el del polinomio
+
+            int modificado = 0; // Indica si se ha modificado el vector
+
+            for(int i = 1; i < n_monomios_; i++) {
+                if (grado == polinomio_[i].getGrado()) {
+                    polinomio_[i].setCoeficiente(coeficiente);
+                    modificado = 1;
                 }
             }
-            if (entoncontrado)
-        } else { // En caso de que el grado sea mayor que el del polinomio
-            Monomio m(grado,coeficiente);
-            polinomio_.push_back(m);
-            n_monomios_++;
-        }
+            if (!modificado) {
+                polinomio_.push_back(m);
+                n_monomios_++;
+                std::sort(polinomio_.begin(), polinomio_.end(),
+                    comparacionMonomio);
+            }
         
-        setGrado(polinomio_.back().getGrado());
+        }
+                
+        Polinomio::setGrado(polinomio_.back().getGrado());
     }
     
     Monomio Polinomio::getMonomio(int grado) {
 
     	for(int i = 0; i < n_monomios_; i++) {
     		if (polinomio_[i].getGrado() == grado) {
-    			return polinomio_[i];
+    			return polinomio_[i]; // Si encuentra el monomio lo devuelve
     		} 
     	}
 
@@ -51,14 +72,12 @@ namespace ed {
         cin >> grado;
         cout << "Introduce el coeficiente: ";
         cin >> coeficiente;
-        Monomio m(grado, coeficiente);
-        polinomio_.push_back(m);
+        
+        setMonomio(coeficiente, grado);
     }
 
     void Polinomio::escribirPolinomio() {
-    	for(int i = 0; i < n_monomios_; i++) {
-    		cout << polinomio_[i];
-    	}
+        cout << *this; // Usa la sobrecarga del operador <<, definida más abajo
     }
 
     float Polinomio::getValorPolinomio(int x) {
@@ -89,7 +108,15 @@ namespace ed {
 // Sin implementar!!!
     Polinomio Polinomio::operator+(Polinomio const &p) {
     	Polinomio p1;
-    	p1.setMonomio(3,5);
+    	Monomio m;
+    	for(int i = 0; i < p.getNumeroMonomios(); i++) {
+    	    m = p.polinomio_[i];
+    	    p1.setMonomio(m.getCoeficiente(), m.getGrado());
+    	}
+    	for(int i = 0; i < this->getNumeroMonomios(); i++) {
+    	    m = this->polinomio_[i];
+    	    p1.setMonomio(m.getCoeficiente(), m.getGrado());
+    	}
     	return p1;
     }
 
@@ -102,16 +129,30 @@ namespace ed {
         cout << "Introduce el coeficiente: ";
         stream >> coeficiente;
 
-        p.setMonomio(grado,coeficiente);
+        p.setMonomio(coeficiente, grado);
 
         return stream;
 
     }
 
     ostream &operator<<(ostream &stream, Polinomio const &p) {
+    	stream << endl; // Deja espacio por encima del mensaje
+    	
+    	if ( p.estaVacio() ) {
+    	    stream << "\tEl polinomio esta vacío" << endl;
+    	    return stream;
+        }
+        
+    	cout << "\tTérminos del polinomio:  ";
     	for(int i = 0; i < p.n_monomios_; i++) {
-    		stream << p.polinomio_[i];
+    		stream << p.polinomio_[i] << " ";
+    		if (p.polinomio_[i+1].getCoeficiente() > 0
+    		    && p.polinomio_[i] != p.polinomio_.back()) {
+    		    stream << "+";
+    		}
     	}
+    	
+    	stream << endl;
 
     	return stream;
     }

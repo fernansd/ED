@@ -8,21 +8,25 @@
 using namespace ed;
 
 int main () {
-    Polinomio p;
-    cout << "hola" << endl;
+    Polinomio p1;
     srand(time(NULL));
-    //for(int i = 0; i < 10; i++) {
-    	p.setMonomio(0,3);
-    	p.setMonomio(2,1);
-    	p.setMonomio(5,2);
-    //}
-    p.escribirPolinomio();
+    for(int i = 0; i <= 11; i++) {
+    	p1.setMonomio(rand()%100, rand()%100);
+    }
+    p1.escribirPolinomio();
 
-    p.leerPolinomio();
+    p1.leerPolinomio();
 
-    cout << p;
-
-    cout << "adios" << endl;
+    cout << p1;
+    
+    Polinomio p2;
+    p2.setMonomio(2,7);
+    p2.setMonomio(5,3);
+    p2.setMonomio(50,100);
+    
+    cout << p2;
+    
+    cout << (p1+p2);
 
     return 0;
 }
