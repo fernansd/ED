@@ -80,12 +80,13 @@ namespace ed {
         cout << endl; // Deja espacio por encima del mensaje
     	
     	if ( estaVacio() ) {
-    	    cout << "\tEl polinomio esta vacío" << endl;
+    	    cout << "El polinomio esta vacío" << endl;
     	    return;
         }
         
-    	cout << "\tTérminos del polinomio:  ";
-    	for(int i = 0; i < n_monomios_; i++) {
+    	cout << "Términos del polinomio:  ";
+    	cout << polinomio_[0];
+    	for(int i = 1; i < n_monomios_; i++) {
     	
     	    // Omite los términos con coeficiente 0 a propósito
     		if (polinomio_[i].getCoeficiente() > 0) {
