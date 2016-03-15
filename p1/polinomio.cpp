@@ -9,7 +9,7 @@ using std::cin;
 namespace ed {
     // Función necesaria para usar la función std::sort() que ordena el vector
     // debe devolver true cuando el primer argumento precede al segundo en orden
-    bool comparacionMonomio(const Monomio& m1, const Monomio& m2) {
+    bool comparadorMonomio(const Monomio& m1, const Monomio& m2) {
         if (m1.getGrado() < m2.getGrado())
             return true;
         else
@@ -20,49 +20,44 @@ namespace ed {
         if ( coeficiente == 0 )
             return; // Sale en el caso de que el monomio valga 0
         
-        Monomio m(coeficiente, grado);
+        Monomio monomio(coeficiente, grado);
         
-        if ( this->estaVacio() ) {
-            polinomio_.push_back(m);
+        if ( estaVacio() ) {
+            polinomio_.push_back(monomio);
             Polinomio::setNumeroMonomios(1);
 
+        // En caso de que el grado sea mayor que el del polinomio
         } else if ( grado > Polinomio::getGrado() ) {
-            polinomio_.push_back(m);
+            polinomio_.push_back(monomio);
             n_monomios_++;            
             
-        } else { // En caso de que el grado sea mayor que el del polinomio
+        } else {
 
             int modificado = 0; // Indica si se ha modificado el vector
 
-            for(int i = 1; i < n_monomios_; i++) {
+            for(int i = 0; i < n_monomios_; i++) {
                 if (grado == polinomio_[i].getGrado()) {
-                    polinomio_[i].setCoeficiente(coeficiente);
+                
+                    polinomio_[i].setCoeficiente(
+                        polinomio_[i].getCoeficiente() + coeficiente);
                     modificado = 1;
+                    
+                    if (polinomio_[i].getCoeficiente() == 0) {
+                        polinomio_.erase(polinomio_.begin() + i);
+                        n_monomios_--;
+                    }
                 }
             }
             if (!modificado) {
-                polinomio_.push_back(m);
+                polinomio_.push_back(monomio);
                 n_monomios_++;
                 std::sort(polinomio_.begin(), polinomio_.end(),
-                    comparacionMonomio);
+                    comparadorMonomio);
             }
         
         }
                 
         Polinomio::setGrado(polinomio_.back().getGrado());
-    }
-    
-    Monomio Polinomio::getMonomio(int grado) {
-
-    	for(int i = 0; i < n_monomios_; i++) {
-    		if (polinomio_[i].getGrado() == grado) {
-    			return polinomio_[i]; // Si encuentra el monomio lo devuelve
-    		} 
-    	}
-
-    	Monomio m(0,0); // Cuando no existe el monomio en el polinomio	
-    	return  m;
-
     }
 
     void Polinomio::leerPolinomio() {
@@ -105,7 +100,6 @@ namespace ed {
     	return p1;
     }
 
-// Sin implementar!!!
     Polinomio Polinomio::operator+(Polinomio const &p) {
     	Polinomio p1;
     	Monomio m;
@@ -144,19 +138,20 @@ namespace ed {
         }
         
     	stream << "Términos del polinomio:  ";
-    	stream << p.polinomio_[0];
-    	for(int i = 1; i < p.n_monomios_; i++) {
-    	
+    	stream << p.polinomio_[p.n_monomios_-1];// Última posición
+    	for(int i = p.n_monomios_-2; i > -1; i--) {
+    	    Monomio m = p.getMonomio(i);
     	    // Omite los términos con coeficiente 0 a propósito
-    		if (p.polinomio_[i].getCoeficiente() > 0) {
-    		    stream << " + " << p.polinomio_[i];
-    		} else if (p.polinomio_[i].getCoeficiente() < 0) {
-    		    Monomio m = p.polinomio_[i];
-    		    m.setCoeficiente(m.getCoeficiente() * (-1));
-    		    stream << " - " << m;
-    		} else if ( i == 0 ) {
-    		    stream << p.polinomio_[i];
-    		}
+    		if (m.getGrado() == 0) {
+   		        stream << " + " << m.getCoeficiente();
+    		} else {
+        		if (m.getCoeficiente() > 0) {
+        		    stream << " + " << m;
+        		} else if (m.getCoeficiente() < 0) {
+        		    m.setCoeficiente(m.getCoeficiente() * (-1));
+        		    stream << " - " << m;
+        		}
+        	}
     	}
     	
     	stream << endl;

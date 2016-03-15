@@ -22,7 +22,7 @@ namespace ed {
         /// No incluye los monomios nulos
         virtual int getNumeroMonomios() const = 0;
 
-        virtual Monomio getMonomio(int grado) = 0;
+        virtual Monomio getMonomio (int grado) const = 0;
 
         virtual void setMonomio(float coeficiente, int grado) = 0;
         

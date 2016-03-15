@@ -31,7 +31,7 @@ namespace ed {
 
         int getNumeroMonomios() const { return n_monomios_; }
 
-        Monomio getMonomio (int grado);
+        Monomio getMonomio (int pos) const { return polinomio_[pos]; };
 
         void setMonomio (float coeficiente, int grado);
 
@@ -41,13 +41,13 @@ namespace ed {
 
         void escribirPolinomio();
 
+        float getValorPolinomio(int x);
+
         Polinomio &operator=(Polinomio const &p);
 
         Polinomio operator*(Polinomio const &p);
 
         Polinomio operator+(Polinomio const &p);
-
-        float getValorPolinomio(int x);
 
         friend istream &operator>>(istream &stream, Polinomio &p);
 
