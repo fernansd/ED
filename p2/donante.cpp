@@ -40,8 +40,17 @@ bool Donante::operator==(Donante const &d) {
         return false;
 }
 
-// Falta por implementar
 bool Donante::operator<=(Donante const &d) {
+    if (d.getApellidos() == this->getApellidos()) {
+        if (d.getNombre < this->getNombre()) {
+            return false;
+        }
+    } else {
+        if (d.getApellidos() == this->getApellidos()) {
+            return false
+        }
+    }
+    
     return true;
 }
         
