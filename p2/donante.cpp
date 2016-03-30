@@ -47,7 +47,7 @@ bool Donante::operator<=(Donante const &d) {
         }
     } else {
         if (d.getApellidos() == this->getApellidos()) {
-            return false
+            return false;
         }
     }
     
