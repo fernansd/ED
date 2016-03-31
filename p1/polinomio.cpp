@@ -61,14 +61,7 @@ namespace ed {
     }
 
     void Polinomio::leerPolinomio() {
-        int grado;
-        float coeficiente;
-        cout << "Introduce el grado: ";
-        cin >> grado;
-        cout << "Introduce el coeficiente: ";
-        cin >> coeficiente;
-        
-        setMonomio(coeficiente, grado);
+        cin >> *this;
     }
 
     void Polinomio::escribirPolinomio() {
@@ -94,36 +87,54 @@ namespace ed {
     }
 
 // Sin implementar!!!
-    Polinomio operator*(const Polinomio &p) {
-    	Polinomio p1;
-    	p1.setMonomio(3,5);
-    	return p1;
+    Polinomio Polinomio::operator*(const Polinomio &p) {
+    	Polinomio aux;
+    	Monomio m;
+    	
+    	for(int i = 0; i < p.getNumeroMonomios(); i++) {
+            for(int j = 0; j < this->getNumeroMonomios(); j++) {
+                m = this->getMonomio(j) * p.getMonomio(i);
+                aux.setMonomio(m.getCoeficiente(), m.getGrado());
+            }
+    	}
+    	
+    	return aux;
     }
 
     Polinomio Polinomio::operator+(Polinomio const &p) {
-    	Polinomio p1;
+    	Polinomio aux;
     	Monomio m;
+    	
     	for(int i = 0; i < p.getNumeroMonomios(); i++) {
-    	    m = p.polinomio_[i];
-    	    p1.setMonomio(m.getCoeficiente(), m.getGrado());
+    	    m = p.getMonomio(i);
+    	    aux.setMonomio(m.getCoeficiente(), m.getGrado());
     	}
+    	
     	for(int i = 0; i < this->getNumeroMonomios(); i++) {
     	    m = this->polinomio_[i];
-    	    p1.setMonomio(m.getCoeficiente(), m.getGrado());
+    	    aux.setMonomio(m.getCoeficiente(), m.getGrado());
     	}
-    	return p1;
+    	
+    	return aux;
     }
 
     istream &operator>>(istream &stream, Polinomio &p) {
         int grado;
         float coeficiente;
-
+        cout << "Introduce grado -1 para detener la introducción" << endl;
         cout << "Introduce el grado del monomio: ";
         stream >> grado;
         cout << "Introduce el coeficiente: ";
         stream >> coeficiente;
-
-        p.setMonomio(coeficiente, grado);
+        
+        while (grado != -1) {
+            p.setMonomio(coeficiente, grado);
+            
+            cout << "Introduce el grado de otro monomio: ";
+            stream >> grado;
+            cout << "Introduce su coeficiente: ";
+            stream >> coeficiente;            
+        }        
 
         return stream;
 

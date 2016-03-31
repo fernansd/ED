@@ -16,7 +16,7 @@ int main () {
       std::cout << "\nValor de los tres monomio: " << m1 << ", ";
 	  std::cout << m2 << ", " << m3 << "\n\n\n";
 
-      while(opcion != 3) {
+      while(opcion !=0) {
 	    opcion = menu();
 
 	    switch (opcion) {
@@ -39,7 +39,7 @@ int main () {
                         " = " << m3;
 
 		    break;
-		case 3:
+		case 0:
 		    break;
 		default:
 		    std::cout << "Error con la opción del menu" << std::endl;
@@ -56,12 +56,12 @@ int menu() {
                      "\t1) Valor del monomio para un valor de X\n"
                      "\t2) Multiplicación de dos monomios y almacenar el "
                      "resultado en el tercero\n"
-                     "\t3) Fin del programa\n";
+                     "\t0) Fin del programa\n";
 
 	std::cout << "Opcion: ";
         std::cin >> opcion;
 
-    } while (opcion < 1 || opcion > 3);
+    } while (opcion < 0 || opcion > 2);
 
     return opcion;
 }

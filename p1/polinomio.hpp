@@ -20,11 +20,17 @@ namespace ed {
         void setNumeroMonomios(int num) { n_monomios_ = num; }
 
     public:
-        Polinomio() {
-            grado_ = 0;
-            n_monomios_ = 0;
-            polinomio_.clear();
-            polinomio_.reserve(10); // Reservamos un espacio inicial de vector
+                
+        Polinomio(int grado=0) {
+            polinomio_.reserve(10);// Reservamos espacio inicial del vector
+                        
+            if ( grado <= 0 ) {
+                grado_ = 0;
+                n_monomios_ = 0;
+            } else {
+                grado_ = grado;
+                setMonomio(1,grado);
+            }
         }
 
         int getGrado() const{ return grado_; }
