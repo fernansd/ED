@@ -40,13 +40,13 @@ bool Donante::operator==(Donante const &d) {
         return false;
 }
 
-bool Donante::operator<=(Donante const &d) {
-    if (d.getApellidos() == this->getApellidos()) {
-        if (d.getNombre < this->getNombre()) {
+bool operator<=(Donante const &d1, Donante const &d2) {
+    if (d1.getApellidos() == d2.getApellidos()) {
+        if (d1.getNombre() < d2.getNombre()) {
             return false;
         }
     } else {
-        if (d.getApellidos() == this->getApellidos()) {
+        if (d1.getApellidos() == d2.getApellidos()) {
             return false;
         }
     }

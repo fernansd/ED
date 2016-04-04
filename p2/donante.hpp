@@ -56,7 +56,7 @@ class Donante : public DonanteInterfaz {
         
         bool operator==(Donante const &d);
         
-        bool operator<=(Donante const &d);
+        friend bool operator<=(Donante const &d1, Donante const &d2);
         
         friend istream &operator>>(istream &stream, Donante &d);
         
