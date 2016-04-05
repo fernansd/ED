@@ -29,5 +29,5 @@ clean:
 	$(RM) *.o *~ $(MAIN) log-*.txt
 
 dist: 
-	tar zcvf ed-practica2.tar.gz *.cpp *.hpp Makefile htdocs/*
+	tar zcvf ed-practica2.tar.gz *.cpp *.hpp Makefile htdocs/* html/
 
