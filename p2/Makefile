@@ -1,5 +1,7 @@
 .PHONY: clean dist
 
+PROJECT_NAME = ed-practica2
+
 CC = g++
 OBJECT_FLAGS = -c -Wall -g
 EXE_FLAGS = -g -Wall
@@ -29,5 +31,5 @@ clean:
 	$(RM) *.o *~ $(MAIN) log-*.txt
 
 dist: 
-	tar zcvf ed-practica2.tar.gz *.cpp *.hpp Makefile htdocs/* html/
+	tar zcvf $(PROJECT_NAME).tar.gz *.cpp *.hpp Makefile Doxyfile
 
