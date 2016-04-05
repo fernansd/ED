@@ -17,28 +17,47 @@ int main () {
         
         // Opciones del menu
         LUGAR(5,10);
-        printf("Leer un donante desde el teclado");
+        printf("1) Leer un donante desde el teclado");
         LUGAR(6,10);
-        printf("Escribir un donante por pantalla");
+        printf("2) Escribir un donante por pantalla");
         LUGAR(7,10);
-        printf("Modificar los datos de un donante");
+        printf("3) Modificar los datos de un donante");
         LUGAR(8,10);
-        printf("Comparara lexicográficamente entre dos donantes");
+        printf("4) Comparara lexicográficamente entre dos donantes");
         LUGAR(10,10);
-        printf("Fin del programa");
+        printf("0) Fin del programa");
         
         LUGAR(13,10);
-        printf("Introduce la opcion");
-        cin >> opcion;
-        
+        printf("Introduce la opcion -> ");
+        scanf("%d", &opcion);
+        getchar();
+                
         BORRAR;
         
         switch (opcion) {
-        
+            case 0:
+                LUGAR(10,10);
+                INVERSO;
+                printf("Fin del programa\n");
+                APAGA;
+                break;
             default:
-                LUGAR(8,10);
-                printf("Fin del programa")
+                BORRAR;
+                LUGAR(21,25);
+                printf("Opción incorrecta");
         }
+        
+        LUGAR(23,25);
+        printf("pulse ");
+        SUBRAYADO;
+        printf("ENTER");
+        APAGA;
+        printf(" para ");
+        INVERSO;
+        printf("continuar");
+        APAGA;
+        getchar();
+        BORRAR;
         
     } while(opcion != 0);
 
