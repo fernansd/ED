@@ -63,9 +63,11 @@ class DonanteInterfaz {
 		\param grupo de tipo std::string
 		\pre El Donante debe existir
 		\post Ninguna
+		\return Duelve un valor booleano que indica si ha tenido éxito
+		        la modificación de la variable
 		\sa setFactorRH()
 		*/
-        virtual void setGrupo(string grupo) = 0;
+        virtual bool setGrupo(string grupo) = 0;
         
 		/*! 
 		\brief Devuelve el factorRH de un Donante
@@ -81,9 +83,11 @@ class DonanteInterfaz {
 		\param factor de tipo std::string
 		\pre El Donante debe existir
 		\post Ninguna
+		\return Duelve un valor booleano que indica si ha tenido éxito
+		        la modificación de la variable
 		\sa setGrupo()
 		*/
-        virtual void setFactorRH(string factor) = 0;
+        virtual bool setFactorRH(string factor) = 0;
         
 		/*! 
 		\brief Asigna a un Donante nombre, apellidos, grupo y factorRh leídos

@@ -6,17 +6,19 @@
 namespace ed {
 
 class Donante : public DonanteInterfaz {
+
     private:
         string nombre_, apellidos_, grupo_, factor_;
     
     public:
-        Donante(string nombre = "", string apellidos = "", string grupo = "",
-            string factor = "") {
+        Donante(string nombre = "-", string apellidos = "-", string grupo = "-",
+            string factor = "-") {
             
-            if ( grupo != "0" && grupo != "A" && grupo != "B" && grupo != "AB" )
+            if ( grupo != "0" && grupo != "A" && grupo != "B" && grupo != "AB" 
+                && grupo != "-")
                 grupo = "";            
             
-            if (factor != "negativo" && factor != "positivo") 
+            if (factor != "negativo" && factor != "positivo" && factor != "-") 
                 factor = "";            
             
             nombre_ = nombre;
