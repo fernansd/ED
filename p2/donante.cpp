@@ -2,15 +2,17 @@
 
 namespace ed {
 
-void Donante::setGrupo(string grupo) {
-    if ( grupo != "0" || grupo != "A" || grupo != "B" || grupo != "AB" )
+bool Donante::setGrupo(string grupo) {
+
+    if ( grupo != "0" && grupo != "A" && grupo != "B" && grupo != "AB" )
         return;
         
     grupo_ = grupo;
 }
         
-void Donante::setFactorRH(string factor) {
-    if (factor != "negativo" || factor != "positivo") 
+bool Donante::setFactorRH(string factor) {
+
+    if (factor != "negativo" && factor != "positivo") 
         return;
         
     factor_ = factor; 
@@ -26,11 +28,13 @@ void Donante::escribirDonante() {
 
 // Falta por implementar        
 Donante& Donante::operator=(Donante const &d) {
+
     *this = d;
     return *this;
 }
         
 bool Donante::operator==(Donante const &d) {
+
     if (this->getNombre() == d.getNombre() &&
         this->getApellidos() == d.getApellidos() &&
         this->getGrupo() == d.getGrupo() &&
@@ -60,10 +64,12 @@ istream &operator>>(istream &stream, Donante &d) {
     cout << "Lectura de datos de donante" << endl;
     
     cout << "Introduce el nombre: ";
-    cin >> d.nombre_;
+    cin >> aux;
+    d.setNombre(aux);
     
     cout << "Introduce los apellidos: ";
-    cin >> d.apellidos_;
+    cin >> aux;
+    d.setApellidos(aux);
     
     cout << "Introduce el grupo: ";
     cin >> aux;
@@ -77,7 +83,9 @@ istream &operator>>(istream &stream, Donante &d) {
 }
         
 ostream &operator<<(ostream &stream, Donante &d) {
-    stream << "Datos de donante: " << endl;
+
+    stream << "Datos de donante: " << endl << endl;
+    
     stream << "\tNombre: " << d.getNombre() << endl;
     stream << "\tApellidos: " << d.getApellidos() << endl;
     stream << "\tGrupo: " << d.getGrupo() << endl;
