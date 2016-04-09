@@ -10,6 +10,10 @@ using namespace std;
 
 using namespace ed;
 
+
+// Función para detener la ejecución hasta que el usuario presione ENTER
+void esperarUsuario(int opc = 0);
+
 /*
  * Prototipos para las funciones ejecutadas en las opciones del menú principal
  */
@@ -62,6 +66,7 @@ int main () {
             case 2: // Opción para escribir los datos del donante d1 por teclado
                     LUGAR(8,9);
                     d1.escribirDonante();
+                    esperarUsuario();
                     break;
                     
             case 3: // Opción para modificar los datos del donante d1
@@ -85,22 +90,40 @@ int main () {
         // Tras acabar de ejecutar la opción elegida se presenta un pantalla de
         // transición hacia el menú principal que requiere que el usuario
         // presione la tecla ENTER para continuar
-        BORRAR;
-        LUGAR(23,25);
-        printf("pulse ");
-        SUBRAYADO;
-        printf("ENTER");
-        APAGA;
-        printf(" para ");
-        INVERSO;
-        printf("continuar");
-        APAGA;
-        getchar();
-        BORRAR;
+        esperarUsuario();
         
     } while(opcion != 0);
 
 return 0;
+} // Fin del Main
+
+/*! 
+    \brief Detiene la ejecución del programa hasta que el usuario presione la
+            la tecla ENTER. Además se lo indica mediante un mensaje en la parte
+            inferior de la pantalla. 
+            Puede recibir un parámetro cuyo valor por
+            defecto es 0. En este caso dejará no borrará el contenido del
+            terminal antes de imprimir el mensaje. En caso de que valga 1,
+            si lo borrará.
+	\params opc Si vale 1, borrará la pantalla pantalla antes de seguir
+	\return Nada
+*/
+void esperarUsuario(int opc) {
+    
+    if (opc == 1) 
+        BORRAR;
+        
+    LUGAR(23,25);
+    printf("pulse ");
+    SUBRAYADO;
+    printf("ENTER");
+    APAGA;
+    printf(" para ");
+    INVERSO;
+    printf("continuar");
+    APAGA;
+    getchar();
+    BORRAR;
 }
 
 /*! 
@@ -190,8 +213,57 @@ void opcionModificarDonante(Donante &d) {
     } while(opcion != 0);
 }
 
-
+/*! 
+    \brief Invoca un menu que permite elegir un atributo de un donante
+            y cambiar su valor
+	\return Nada
+	\pre El Donante debe existir
+	\post Ninguna
+	\sa opcionLeerDonante() opcionEscribirDonante() opcionCompararDonantes()
+*/
 void opcionCompararDonantes(Donante &d1, Donante &d2) {
-
+    LUGAR(8,10);
+    printf("Los datos de los donantes a comparar son:");
+    
+    LUGAR(10,10);
+    SUBRAYADO;
+    printf("Donante 1: ");
+    APAGA;
+    LUGAR(12,10);
+    d1.escribirDonante();
+    esperarUsuario();
+    
+    LUGAR(10,10);
+    SUBRAYADO;
+    printf("Donante 2: ");
+    APAGA;
+    LUGAR(12,10);
+    d2.escribirDonante();
+    esperarUsuario();
+    
+    LUGAR(10,10);
+    if ( d1 == d2 ) {
+        printf("Los dos donantes son iguales.");
+    } else if ( d1 <= d2 ) {
+        printf("El primer donante es menor que el segundo.");
+    } else {
+        printf("El primer donante es mayor que el segundo.");
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

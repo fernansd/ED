@@ -17,7 +17,7 @@ bool Donante::setGrupo(string grupo) {
         return false;
         
     grupo_ = grupo;
-    return true
+    return true;
 }
 
 /*! 
@@ -88,17 +88,25 @@ bool Donante::operator==(Donante const &d) {
 }
 
 bool operator<=(Donante const &d1, Donante const &d2) {
-    if (d1.getApellidos() == d2.getApellidos()) {
-        if (d1.getNombre() < d2.getNombre()) {
-            return false;
-        }
-    } else {
-        if (d1.getApellidos() == d2.getApellidos()) {
-            return false;
-        }
+    
+    // Usa la sobrecarga del operador == para la clase Donante
+    if (d1 == d2) {
+        return true;
+    } 
+    
+    /*
+     * Aprovechan los operadores de comparación del tipo string que devuelven
+     */
+    if (d1.getApellidos() < d2.getApellidos()) {
+        return true;
     }
     
-    return true;
+    if ( d1.getApellidos() == d2.getApellidos() 
+            && d1.getNombre() < d2.getNombre() ) {
+        return true;
+    }
+    
+    return false;
 }
 
 /*! 
