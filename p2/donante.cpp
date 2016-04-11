@@ -76,7 +76,7 @@ Donante& Donante::operator=(Donante const &d) {
     return *this;
 }
         
-bool Donante::operator==(Donante const &d) {
+bool Donante::operator==(Donante const &d) const {
 
     if (this->getNombre() == d.getNombre() &&
         this->getApellidos() == d.getApellidos() &&
