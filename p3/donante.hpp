@@ -9,7 +9,7 @@ class Donante : public DonanteInterfaz {
 
     private:
         string nombre_, apellidos_, grupo_, factor_;
-        int donanciones_;
+        int donaciones_;
     
     public:
         Donante(string nombre = "-", string apellidos = "-", string grupo = "-",
@@ -23,7 +23,7 @@ class Donante : public DonanteInterfaz {
                 factor = "";            
             
             if (donaciones < 0)
-            	donaciones = 0
+            	donaciones = 0;
             
             nombre_ = nombre;
             apellidos_ = apellidos;

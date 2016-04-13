@@ -7,7 +7,7 @@ OBJECT_FLAGS = -c -Wall -g
 EXE_FLAGS = -g -Wall
 INCLUDES = -I.
 
-MAIN = donante.o pruebaDonante.out lista.o donantes.o pruebaDonantes.out
+MAIN = donante.o
 
 all:    $(MAIN)
 	@echo  Terminado
@@ -15,16 +15,10 @@ all:    $(MAIN)
 donante.o: donante.cpp donanteInterfaz.hpp donante.hpp
 	$(CC) $(OBJECT_FLAGS) $(INCLUDES) $<  -o $@
 	
-lista.o: lista.cpp listaInterfaz.hpp lista.hpp
-	$(CC) $(OBJECT_FLAGS) $(INCLUDES) $<  -o $@
-
-donantes.o: donantes.cpp donantesInterfaz.hpp donantes.hpp donante.o lista.o
+monticulo.o: monticuloDonantes.cpp monticuloDonantesInterfaz.hpp monticuloDonantes.hpp
 	$(CC) $(OBJECT_FLAGS) $(INCLUDES) $<  -o $@
 	
-pruebaDonante.out: pruebaDonante.cpp donante.o
-	$(CC) $(EXE_FLAGS) $^ -o $@
-
-pruebaDonantes.out: pruebaDonantes.cpp donantes.o lista.o donante.o
+pruebaMonticulo.out: pruebaMonticulo.cpp donante.o
 	$(CC) $(EXE_FLAGS) $^ -o $@
 
 clean:
