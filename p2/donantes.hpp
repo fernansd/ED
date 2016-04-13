@@ -9,6 +9,8 @@
 #include "donante.hpp"
 #include "lista.hpp"
 
+using namespace std;
+
 namespace ed {
 
 class Donantes : public DonantesInterfaz {

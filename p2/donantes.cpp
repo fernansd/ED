@@ -3,6 +3,8 @@
 #include "donante.hpp"
 #include "donantes.hpp"
 
+using namespace std;
+
 namespace ed {
 
     Donantes::Donantes(string archivo_donantes) {

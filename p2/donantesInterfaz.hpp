@@ -13,7 +13,7 @@ class DonantesInterfaz {
     
     virtual Donante buscaDonante(string nombre, string apellidos) const = 0;
     
-    virtual void insertaDonante(Donante &d) const = 0;
+    virtual void insertaDonante(const Donante &d) = 0;
     
     virtual void borrarDonante(Donante &d) = 0;
     
