@@ -27,7 +27,7 @@ class Donante : public DonanteInterfaz {
             factor_ = factor;
         }
         
-        Donante(Donante &d) {
+        Donante(const Donante &d) {
             nombre_ = d.getNombre();
             apellidos_ = d.getApellidos();
             grupo_ = d.getGrupo();

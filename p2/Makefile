@@ -2,12 +2,12 @@
 
 PROJECT_NAME = ed-practica2
 
-CC = g++
+CC = g++ -std=c++11
 OBJECT_FLAGS = -c -Wall -g
 EXE_FLAGS = -g -Wall
 INCLUDES = -I.
 
-MAIN = donante.o pruebaDonante.out
+MAIN = donante.o pruebaDonante.out lista.o donantes.o
 
 all:    $(MAIN)
 	@echo  Terminado

@@ -19,26 +19,41 @@ class listaInterfaz {
 		\post Ninguna
 		\sa setX(), setY()
 		*/
-		virtual int capacity() const = 0;
 		
 		/*! 
-		\brief Constructor que crea un Punto2D a partir de sus coordenadas x e y     
+		\brief Devuelve el número de elementos en la lista.    
 	 	\note Los parámetros tienen valores por defecto
 		\pre Ninguna
-		\post Valor entre comprendido en [0, capacity()]
+		\post El valor devuelto está comprendido en [0, capacity()]
 		*/
-		virtual int nItems() const = 0;
+		virtual int size() const = 0;
 		
 		/*! 
-		\brief Constructor que crea un Punto2D a partir de sus coordenadas x e y     
-	 	\note Los parámetros tienen valores por defecto
+		\brief Comprueba si la lista está vacía.
 		\pre Ninguna
-		\post Devuelve true si nItems() == capacity()
-		\post Devuelve false si nItems() < capacity()
+		\return Valor booleano que indica el estado de la lista.
+		\post Devuelve true si size() == 0
+		\post Devuelve false si size() > 0
 		*/
-		virtual bool isFull() const = 0;
+		virtual bool isEmpty() const = 0;
 		
-		virtual void insertFirst(T const& item) = 0;
+		virtual int getPos() const = 0;
+		
+		virtual bool goTo(int pos) const = 0;
+		
+		virtual bool search(T item) const = 0;
+		
+		virtual T* getItem() const = 0;
+		
+		virtual T* getPrev() const = 0;
+		
+		virtual T* getNext() const = 0;
+	
+		virtual void insertBefore(T const& item) = 0;
+		
+		virtual void insertAfter(T const& item) = 0;
+		
+		virtual void removeItem() = 0;
 
 
 };
