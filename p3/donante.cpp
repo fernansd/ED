@@ -48,7 +48,7 @@ bool Donante::setFactorRH(string factor) {
 	        la modificación de la variable
 	\sa getDonaciones()
 */
-bool Donante::setDonanciones(int num) {
+bool Donante::setDonaciones(int num) {
 	
 	if ( num < 0 )
 		return false;

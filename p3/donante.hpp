@@ -57,7 +57,7 @@ class Donante : public DonanteInterfaz {
         
         int getDonaciones() const { return donaciones_; }
         
-        bool setDonanciones(int num);
+        bool setDonaciones(int num);
         
         void leerDonante();
         

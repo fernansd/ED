@@ -7,7 +7,7 @@ OBJECT_FLAGS = -c -Wall -g
 EXE_FLAGS = -g -Wall
 INCLUDES = -I.
 
-MAIN = donante.o
+MAIN = donante.o monticulo.o
 
 all:    $(MAIN)
 	@echo  Terminado
