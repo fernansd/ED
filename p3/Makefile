@@ -7,7 +7,7 @@ OBJECT_FLAGS = -c -Wall -g
 EXE_FLAGS = -g -Wall
 INCLUDES = -I.
 
-MAIN = donante.o monticulo.o
+MAIN = donante.o monticulo.o pruebaMonticulo.out
 
 all:    $(MAIN)
 	@echo  Terminado
@@ -18,7 +18,7 @@ donante.o: donante.cpp donanteInterfaz.hpp donante.hpp
 monticulo.o: monticuloDonantes.cpp monticuloDonantesInterfaz.hpp monticuloDonantes.hpp
 	$(CC) $(OBJECT_FLAGS) $(INCLUDES) $<  -o $@
 	
-pruebaMonticulo.out: pruebaMonticulo.cpp donante.o
+pruebaMonticulo.out: pruebaMonticulo.cpp donante.o monticulo.o
 	$(CC) $(EXE_FLAGS) $^ -o $@
 
 clean:
