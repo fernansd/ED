@@ -89,6 +89,27 @@ class DonanteInterfaz {
 		*/
         virtual bool setFactorRH(string factor) = 0;
         
+        /*! 
+		\brief Devuelve el número de donaciones hechas por el Donante
+		\pre El Donante debe existir
+		\post Ninguna
+		\return Duelve un valor entero que representa el número de donaciones.
+				Está comprendido en el rango [0, entero_positivo]
+		\sa setDonaciones()
+		*/
+        virtual int getDonaciones() const = 0;
+        
+        /*! 
+		\brief Asigna un valor num al atributo donaciones del Donante
+		\param num tipo entero que representa el número de donaciones
+		\pre El Donante debe existir
+		\post Ninguna
+		\return Duelve un valor booleano que indica si ha tenido éxito
+		        la modificación de la variable
+		\sa getDonaciones()
+		*/
+        virtual bool setDonaciones(int num) = 0;
+        
 		/*! 
 		\brief Asigna a un Donante nombre, apellidos, grupo y factorRh leídos
 		 		desde el teclado

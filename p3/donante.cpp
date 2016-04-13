@@ -40,6 +40,24 @@ bool Donante::setFactorRH(string factor) {
 }
 
 /*! 
+	\brief Asigna un valor num al atributo donaciones del Donante
+	\param num tipo entero que representa el número de donaciones
+	\pre El Donante debe existir
+	\post Ninguna
+	\return Duelve un valor booleano que indica si ha tenido éxito
+	        la modificación de la variable
+	\sa getDonaciones()
+*/
+bool setDonanciones(int num) {
+	
+	if ( num < 0 )
+		return false;
+		
+	donaciones_ = num;
+	return true;
+}
+
+/*! 
     \brief Permite la lectura a través de teclado de todos los datos de un
             donante. Internamente hace uso de la sobrecarga del operador >>.
 	\return Nada

@@ -9,10 +9,11 @@ class Donante : public DonanteInterfaz {
 
     private:
         string nombre_, apellidos_, grupo_, factor_;
+        int donanciones_;
     
     public:
         Donante(string nombre = "-", string apellidos = "-", string grupo = "-",
-            string factor = "-") {
+            string factor = "-", int donaciones = 0) {
             
             if ( grupo != "0" && grupo != "A" && grupo != "B" && grupo != "AB" 
                 && grupo != "-")
@@ -21,10 +22,14 @@ class Donante : public DonanteInterfaz {
             if (factor != "negativo" && factor != "positivo" && factor != "-") 
                 factor = "";            
             
+            if (donaciones < 0)
+            	donaciones = 0
+            
             nombre_ = nombre;
             apellidos_ = apellidos;
             grupo_ = grupo;
             factor_ = factor;
+            donaciones_ = donaciones;
         }
         
         Donante(const Donante &d) {
@@ -49,6 +54,10 @@ class Donante : public DonanteInterfaz {
         string getFactorRH() const { return factor_; }
         
         bool setFactorRH(string factor);
+        
+        int getDonaciones() const { return donaciones_; }
+        
+        bool setDonanciones(int num);
         
         void leerDonante();
         
