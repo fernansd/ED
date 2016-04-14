@@ -44,8 +44,7 @@ bool Lista<T>::prev() {
 \post Devuelve true si size() == 0
 \post Devuelve false si size() > 0
 */
-template <class T>
-bool Lista<T>::isEmpty() const {
+template <class T> bool Lista<T>::isEmpty() const {
     if (size_ == 0)
         return true;
     else 

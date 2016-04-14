@@ -2,7 +2,7 @@
 #include <cstdio>
 
 // Cabecera que contiene las macros para dar formato a la salida de terminal
-#include "../menu/macros.hpp"
+#include "macros.hpp"
 
 #include "donante.hpp"
 
