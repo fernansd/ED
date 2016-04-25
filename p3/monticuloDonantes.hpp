@@ -1,15 +1,27 @@
 #ifndef MONTICULODONANTES_HPP
 #define MONTICULODONANTES_HPP
 
+#include <vector>
+
 #include "monticuloDonantesInterfaz.hpp"
 
 namespace ed {
 
 class MonticuloDonantes : public MonticuloDonantesInterfaz {
 	private:
-		void flotar() { return; }
+		int getPos(const Donante& d);
 		
-		void hundir() { return; }
+		int hijoIzquierdo(const int pos_padre);
+		
+		int hijoDerecho(const int pos_padre);
+		
+		int padre(const int pos_hijo);
+		
+		void flotar(const Donante& d);
+		
+		void hundir(const Donante& d);
+		
+		vector<Donante> monticulo_;
 		
 	public:
 		MonticuloDonantes() {}
@@ -24,6 +36,7 @@ class MonticuloDonantes : public MonticuloDonantesInterfaz {
 		/*!
 			\brief Indica que donante está en la cima
 			\params Ninguno
+			\pre El montículo no está vacío
 			\return Devuelve el Donante que se encuentre en la cima del montículo
 		*/
 		Donante cima() const;
@@ -38,9 +51,14 @@ class MonticuloDonantes : public MonticuloDonantesInterfaz {
 		/*!
 			\brief Borra el Donante en la cima del montículo
 			\params Ninguno
+			\pre El montículo no está vacío
 			\return Nada
 		*/	
 		void borrar();
+		
+		void leerMonticulo(string nombre_fichero);
+		
+		void grabarMonticulo(string nombre_fichero);
 
 };
 } // Fin namespace ed

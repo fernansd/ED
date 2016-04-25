@@ -112,19 +112,34 @@ bool operator<=(Donante const &d1, Donante const &d2) {
         return true;
     } 
     
-    /*
-     * Aprovechan los operadores de comparación del tipo string que devuelven
-     */
-    if (d1.getApellidos() < d2.getApellidos()) {
-        return true;
-    }
-    
-    if ( d1.getApellidos() == d2.getApellidos() 
-            && d1.getNombre() < d2.getNombre() ) {
-        return true;
+    // El número de donaciones es el principal parámetro para clasificar
+    if (d1.getDonaciones() < d2.getDonaciones()) {
+    	return true;
+   	
+   	// Si el número de donaciones es el mismo, clasifica por nombre completo
+    } else if (d1.getDonaciones() == d2.getDonaciones()) {
+    	
+    	/*
+     	 * Aprovechan los operadores de comparación del tipo string que devuelven
+     	 */
+		if (d1.getApellidos() < d2.getApellidos()) {
+		    return true;
+		}
+		
+		if ( d1.getApellidos() == d2.getApellidos() 
+		        && d1.getNombre() < d2.getNombre() ) {
+		    return true;
+		}
     }
     
     return false;
+}
+
+bool operator>(Donante const &d1, Donante const &d2) {
+	if (d1 <= d2)
+		return false;
+	else
+		return true;
 }
 
 /*! 
