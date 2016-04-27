@@ -69,9 +69,9 @@ class Lista : public listaInterfaz<T> {
 
         int getPos() const { return pos_; }
 
-        bool goTo(int pos) const;
+        bool goTo(int pos);
 
-        bool search(T item) const;
+        bool search(T item);
 
         T* getItem() const { return cursor_->getItem(); }
 
@@ -88,5 +88,6 @@ class Lista : public listaInterfaz<T> {
 
 }; // Fin clase Lista
 } // Fin namespace ed
+#include "lista.cpp"
 #endif
 

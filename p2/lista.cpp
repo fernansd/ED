@@ -1,6 +1,3 @@
-
-#include "lista.hpp"
-
 namespace ed {
 
 /*! 
@@ -53,7 +50,7 @@ bool Lista<T>::isEmpty() const {
 }
 
 template <class T>
-bool Lista<T>::goTo(int pos) const {
+bool Lista<T>::goTo(int pos) {
 
     // El cursor ya está en la posición proporcionada
     if ( pos == pos_ )
@@ -78,7 +75,7 @@ bool Lista<T>::goTo(int pos) const {
 }
 
 template <class T>
-bool Lista<T>::search(T item) const {
+bool Lista<T>::search(T item) {
     // Indica si se ha encontrado el nodo pasado por parámetro
     bool encontrado = false;
     
@@ -91,8 +88,8 @@ bool Lista<T>::search(T item) const {
     // Pasa al node siguiente hasta que llegue al final de la lista
     // o encuentre un nodo que coincida con el parámetro
     while ( next() ) {
-        if ( *cursor_ == item )
-            encontrado;
+        if ( *(cursor_->getItem()) == item )
+            encontrado = true;
             break;
     }
     
@@ -180,14 +177,14 @@ void Lista<T>::removeItem() {
     if ( cursor_ == head_ ) {
         head_ = cursor_->getNext();
         head_->setPrev(nullptr);
-        delete *cursor_;
+        delete cursor_;
         cursor_ = head_;
         
     // Cuando el nodo a eliminar es el último de la lista
     } else if ( cursor_->getNext() == nullptr ) {
         Node<T>* aux = cursor_->getPrev();
         aux->setNext(nullptr);
-        delete *cursor_;
+        delete cursor_;
         cursor_ = aux;
         pos_--;
         

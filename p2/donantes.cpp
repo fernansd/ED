@@ -32,7 +32,7 @@ namespace ed {
         return lista_.isEmpty();
     }
 
-    Donante Donantes::buscaDonante(string nombre, string apellidos) const {
+    Donante Donantes::buscaDonante(string nombre, string apellidos) {
         // Donante variable auxiliar para comprobar el valor del donante
         Donante* aux;
         for (int i = 0; i < lista_.size(); i++) {
@@ -59,7 +59,7 @@ namespace ed {
     }
     
     /// Devuelve -1 si no encuentra el donante
-    int Donantes::posicionDonante(const Donante &d) const {
+    int Donantes::posicionDonante(const Donante &d) {
         if ( lista_.search(d) )
             return lista_.getPos();
         else
