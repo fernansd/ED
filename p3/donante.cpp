@@ -135,6 +135,14 @@ bool operator<=(Donante const &d1, Donante const &d2) {
     return false;
 }
 
+/*! 
+    \brief Sobrecarga del operador > realiza la comparación a partir del
+    		operador <=.
+	\return Devuelve un istream
+	\pre El Donante debe existir
+	\post Ninguna
+	\sa ostream &operator<<(ostream &stream, Donante &d)
+*/
 bool operator>(Donante const &d1, Donante const &d2) {
 	if (d1 <= d2)
 		return false;

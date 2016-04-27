@@ -144,7 +144,8 @@ void esperarUsuario(int opc) {
 	\return Nada
 */
 void leerMonticuloFichero(MonticuloDonantes& m) {
-	return; // Falta por implementar
+	m.leerMonticulo("lista-donantes.txt");
+	LUGAR(
 }
 
 /*! 
@@ -155,7 +156,7 @@ void leerMonticuloFichero(MonticuloDonantes& m) {
 	\return Nada
 */
 void grabarMonticulo(MonticuloDonantes& m) {
-	return; // Falta por implementar
+	m.grabarMonticulo("lista-donantes.txt");
 }
 
 /*! 
@@ -166,6 +167,26 @@ void grabarMonticulo(MonticuloDonantes& m) {
 	\return Nada
 */
 void simularDonaciones(MonticuloDonantes& m) {
-	return; // Falta por implementar
+	int n_donanciones;
+	LUGAR(10,10);
+	printf("Introduce el número de donanciones a realizar: ");
+	scanf("%d",n_donaciones);
+	LUGAR(10,11);
+	printf("Realizando donanciones...");
+	for (int i = 0; i < n_donanciones; i++) {
+		m.realizarDonación();
+	}
+	LUGAR(10,12);
+	printf("¡Donanciones realizadas!");
+	
+	BORRAR;
+	LUGAR(10,10);
+	SUBRAYADO;
+	printf("El donante en la cima es: ");
+	APAGAR;
+	m.cima().escribirDonante();
+	
+	esperarUsuario();	
+	
 }
 
