@@ -100,6 +100,7 @@ int main() {
         
     } while(opcion != 0);
     
+    // Limpia la pantalla y posiciona el cursor en la esquina superior izquierda
     BORRAR;
     LUGAR(0,0);
 
@@ -156,7 +157,8 @@ void leerMonticuloFichero(MonticuloDonantes& m) {
 	\return Nada
 */
 void grabarMonticulo(MonticuloDonantes& m) {
-	m.grabarMonticulo("lista-donantes.txt");
+	m.grabarMonticulo("back-lista-donantes.txt");
+	
 }
 
 /*! 
@@ -168,14 +170,20 @@ void grabarMonticulo(MonticuloDonantes& m) {
 */
 void simularDonaciones(MonticuloDonantes& m) {
 
-	int n_donanciones;
+    if (m.vacio()) {
+        LUGAR(10,10);
+        printf("El montículo está vacío");
+        return;
+    }
+
+	int n_donaciones;
 	LUGAR(10,10);
 	printf("Introduce el número de donanciones a realizar: ");
-	scanf("%d",n_donaciones);
+	scanf("%d", &n_donaciones);
 	LUGAR(10,11);
 	printf("Realizando donanciones...");
-	for (int i = 0; i < n_donanciones; i++) {
-		m.realizarDonación();
+	for (int i = 0; i < n_donaciones; i++) {
+		m.realizarDonacion();
 	}
 	LUGAR(10,12);
 	printf("¡Donanciones realizadas!");
@@ -184,10 +192,10 @@ void simularDonaciones(MonticuloDonantes& m) {
 	LUGAR(10,10);
 	SUBRAYADO;
 	printf("El donante en la cima es: ");
-	APAGAR;
+	APAGA;
 	m.cima().escribirDonante();
 	
-	esperarUsuario();	
+	esperarUsuario();
 
 }
 

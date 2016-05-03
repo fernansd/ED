@@ -1,0 +1,2 @@
+Sanchez Delgado,Fernando,0,negativo,10
+Ruiz Perez,Antonio,B,positivo,3

@@ -17,10 +17,10 @@ class Donante : public DonanteInterfaz {
             
             if ( grupo != "0" && grupo != "A" && grupo != "B" && grupo != "AB" 
                 && grupo != "-")
-                grupo = "";            
+                grupo = "-";            
             
             if (factor != "negativo" && factor != "positivo" && factor != "-") 
-                factor = "";            
+                factor = "-";            
             
             if (donaciones < 0)
             	donaciones = 0;
@@ -37,6 +37,7 @@ class Donante : public DonanteInterfaz {
             apellidos_ = d.getApellidos();
             grupo_ = d.getGrupo();
             factor_ = d.getFactorRH();
+            donaciones_ = d.getDonaciones();
         }
     
         string getNombre() const { return nombre_; }
@@ -65,7 +66,7 @@ class Donante : public DonanteInterfaz {
         
         Donante &operator=(Donante const &d);
         
-        bool operator==(Donante const &d) const;
+        bool operator==(const Donante &d) const;
         
         friend bool operator<=(Donante const &d1, Donante const &d2);
         

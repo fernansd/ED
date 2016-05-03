@@ -90,7 +90,12 @@ void Donante::escribirDonante() {
 */  
 Donante& Donante::operator=(Donante const &d) {
 
-    *this = d;
+    nombre_ = d.getNombre();
+    apellidos_ = d.getApellidos();
+    grupo_ = d.getGrupo();
+    factor_ = d.getFactorRH();
+    donaciones_ = d.getDonaciones();
+    
     return *this;
 }
         
@@ -222,6 +227,7 @@ ostream &operator<<(ostream &stream, Donante &d) {
     stream << "\tApellidos: " << d.getApellidos() << endl;
     stream << "\tGrupo: " << d.getGrupo() << endl;
     stream << "\tFactor RH: " << d.getFactorRH() << endl;
+    stream << "\tDonaciones: " << d.getDonaciones() << endl;
     
     return stream;
 }

@@ -16,7 +16,7 @@ class MonticuloDonantes : public MonticuloDonantesInterfaz {
 			\params d Donante que hay que buscar
 			\return Posición del donante dentro del vector
 		*/
-		int getPos(const Donante& d);
+		int getPos(const Donante &d);
 		
 		/*!
 			\brief Devuelve la posición del hijo derecho del nodo cuya posición
@@ -123,7 +123,7 @@ class MonticuloDonantes : public MonticuloDonantesInterfaz {
 			\warning Método no definido en la interfaz de la clase
 			\return Nada
 		*/	
-		void realizarDonancion();
+		void realizarDonacion();
 
 };
 } // Fin namespace ed

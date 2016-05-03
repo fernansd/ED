@@ -1,5 +1,8 @@
 #include <algorithm>
+#include <sstream>
+#include <fstream>
 
+#include "donante.hpp"
 #include "monticuloDonantes.hpp"
 
 namespace ed {
@@ -15,8 +18,8 @@ namespace ed {
 			\params d Donante que hay que buscar
 			\return Posición del donante dentro del vector
  */
-int MonticuloDonantes::getPos(const Donante& d) {
-	for (int i = 0; i < monticulo_.size(); i++) {
+int MonticuloDonantes::getPos(const Donante &d) {
+	for (size_t i = 0; i < monticulo_.size(); i++) {
 		if ( d == monticulo_[i] )
 			return i;
 	}
@@ -31,7 +34,7 @@ int MonticuloDonantes::getPos(const Donante& d) {
 	\warning Puede devolver posiciones no existentes
 	\return Devuelve un entero como la posición
 */
-int MonticuloDonantes::hijoIzquierdo(const int pos_padre) {
+int MonticuloDonantes::hijoIzquierdo(const unsigned int pos_padre) {
 
 	return 2*pos_padre + 1;
 }
@@ -43,7 +46,7 @@ int MonticuloDonantes::hijoIzquierdo(const int pos_padre) {
 	\warning Puede devolver posiciones no existentes
 	\return Devuelve un entero como la posición
 */		
-int MonticuloDonantes::hijoDerecho(const int pos_padre) {
+int MonticuloDonantes::hijoDerecho(const unsigned int pos_padre) {
 	
 	return 2*pos_padre + 2;
 }
@@ -55,7 +58,7 @@ int MonticuloDonantes::hijoDerecho(const int pos_padre) {
 	\warning Puede devolver posiciones no existentes
 	\return Devuelve un entero como la posición
 */
-int MonticuloDonantes::padre(const int pos_hijo) {
+int MonticuloDonantes::padre(const unsigned int pos_hijo) {
 	
 	return (pos_hijo - 1) / 2;
 }
@@ -66,6 +69,11 @@ int MonticuloDonantes::padre(const int pos_hijo) {
 	\return Nada
 */
 void MonticuloDonantes::flotar(const unsigned int i) {
+
+    if ( monticulo_.size() == 1)
+        return;
+        
+    if ( i == 0 ) return;
 
 	if ( i < monticulo_.size() && monticulo_[i] <= monticulo_[padre(i)] ) {
 		swap(monticulo_[i], monticulo_[padre(i)]);
@@ -83,12 +91,15 @@ void MonticuloDonantes::hundir(const unsigned int i) {
 	unsigned int hijoIzquierdo, hijoDerecho, hijoMenor;
 	hijoIzquierdo = this->hijoIzquierdo(i);
 	hijoDerecho = this->hijoDerecho(i);
+	cout << i << "--";
+	
+	if ( i == (monticulo_.size() -1) ) return;
 	
 	
 	// Primero buscamos cuál de los dos hijos es el menor para luego compararlo
 	if ( hijoDerecho >= monticulo_.size() ) { // Si el hijo derecho no existe
 	    // Si el hijo izquierdo tampoco existe vuelve directamente
-	    if ( hijoDerecho >= monticulo_.size() ) {
+	    if ( hijoIzquierdo >= monticulo_.size() ) {
 	        return;
         // Si solo existe el hijo derecho entonces será el menor
 	    } else {
@@ -136,15 +147,14 @@ Donante MonticuloDonantes::cima() const {
 	\return Nada
 */
 void MonticuloDonantes::insertar(const Donante &d) {
-
 	monticulo_.push_back(d);
-	int pos = monticulo_.size() -1 ;
-	
+	int pos = monticulo_.size() -1;
+
+	if (monticulo_.size() == 1) return;
 	// Si el elemento insertado incumple la condición de monticulo se actualiza
 	// el monticulo para que lo cumpla
 	if ( monticulo_[padre(pos)] <= d )
 		this->flotar(monticulo_.size() -1 );
-
 }
 
 /*!
@@ -155,7 +165,14 @@ void MonticuloDonantes::insertar(const Donante &d) {
 */	
 void MonticuloDonantes::borrar() {
 
-	std::iter_swap(monticulo_.begin(), monticulo_.end());
+    if ( vacio() ) return;
+    
+    if ( monticulo_.size() == 1) {
+        monticulo_.pop_back();    
+        return;
+    }
+
+	monticulo_[0] = monticulo_.back();
 	monticulo_.pop_back();
 	this->hundir(0); // Hunde el nodo raíz hasta su posición
 }
@@ -169,7 +186,39 @@ void MonticuloDonantes::borrar() {
 	\return Nada
 */	
 void MonticuloDonantes::leerMonticulo(string nombre_fichero) {
-	return; // Sustituir por código bueno
+
+	ifstream archivo(nombre_fichero); // El destructor cierra el fichero
+	string linea;
+	
+	if (archivo.is_open()) {
+	
+	    // Obtiene líneas completas hasta llegar al final del fichero
+	    while (getline(archivo, linea)) {
+	        stringstream stream_linea(linea);
+	        string valor;
+	        Donante d;
+	        
+	        // Rellena los campos del donante con los obtenidos del fichero
+	        getline(stream_linea, valor, ',');
+	        d.setApellidos(valor);
+	        getline(stream_linea, valor, ',');
+	        d.setNombre(valor);
+	        getline(stream_linea, valor, ',');
+	        d.setGrupo(valor);
+	        getline(stream_linea, valor, ',');
+	        d.setFactorRH(valor);
+	        getline(stream_linea, valor, ',');
+	        if (!d.setDonaciones( atoi(valor.c_str()) ) ) 
+	            cout << "error";
+	        
+	        this->insertar(d);
+	    
+	    }
+	} else {
+	    cout << "Error leyendo monticulo de fichero" << endl;
+	}
+	
+	
 }
 
 /*!
@@ -181,7 +230,27 @@ void MonticuloDonantes::leerMonticulo(string nombre_fichero) {
 	\return Nada
 */	
 void MonticuloDonantes::grabarMonticulo(string nombre_fichero) {
-	return; // Sustituir por código bueno
+	ofstream archivo(nombre_fichero); // Se encarga de cerrarlo el destructor
+	Donante d;
+	
+	if ( archivo.is_open() ) {
+	
+	    while ( !this->vacio() ) {
+	        
+	        d = cima();
+	        archivo << d.getApellidos() << ',';
+	        archivo << d.getNombre() << ',';
+	        archivo << d.getGrupo() << ',';
+	        archivo << d.getFactorRH() << ',';
+	        archivo << d.getDonaciones() << '\n';
+	        
+	        // Elimina el donante escrito en fichero para acceder al siguiente
+	        this->borrar();
+	    }
+	} else {
+	    cout << "Error escribiendo el montículo en el fichero" << endl;
+	}
+	
 }
 
 /*!
@@ -192,10 +261,12 @@ void MonticuloDonantes::grabarMonticulo(string nombre_fichero) {
 	\warning Método no definido en la interfaz de la clase
 	\return Nada
 */	
-void MonticuloDonantes::realizarDonancion() {
+void MonticuloDonantes::realizarDonacion() {
 
-	int donaciones = monticulo_[0].getDonaciones() + 1;
+    Donante d = monticulo_.front();
+	int donaciones = d.getDonaciones() + 1;
 	monticulo_[0].setDonaciones(donaciones);
+	
 	// Se encarga de actualizar el orden del monticulo en el caso de que cambie
 	hundir(0);
 
