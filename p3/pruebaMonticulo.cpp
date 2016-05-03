@@ -144,7 +144,7 @@ void esperarUsuario(int opc) {
 	\return Nada
 */
 void leerMonticuloFichero(MonticuloDonantes& m) {
-	return; // Falta por implementar
+	m.leerMonticulo("lista-donantes.txt");
 }
 
 /*! 
@@ -155,7 +155,7 @@ void leerMonticuloFichero(MonticuloDonantes& m) {
 	\return Nada
 */
 void grabarMonticulo(MonticuloDonantes& m) {
-	return; // Falta por implementar
+	m.grabarMonticulo("lista-donantes.txt");
 }
 
 /*! 
@@ -166,6 +166,7 @@ void grabarMonticulo(MonticuloDonantes& m) {
 	\return Nada
 */
 void simularDonaciones(MonticuloDonantes& m) {
-	return; // Falta por implementar
+	LUGAR(10,10);
+	printf("");
 }
 

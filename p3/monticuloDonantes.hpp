@@ -11,15 +11,15 @@ class MonticuloDonantes : public MonticuloDonantesInterfaz {
 	private:
 		int getPos(const Donante& d);
 		
-		int hijoIzquierdo(const int pos_padre);
+		int hijoIzquierdo(const unsigned int pos_padre);
 		
-		int hijoDerecho(const int pos_padre);
+		int hijoDerecho(const unsigned int pos_padre);
 		
-		int padre(const int pos_hijo);
+		int padre(const unsigned int pos_hijo);
 		
-		void flotar(const Donante& d);
+		void flotar(const unsigned int i);
 		
-		void hundir(const Donante& d);
+		void hundir(const unsigned int i);
 		
 		vector<Donante> monticulo_;
 		
@@ -31,7 +31,7 @@ class MonticuloDonantes : public MonticuloDonantesInterfaz {
 			\params Ninguno
 			\return Devuelve un valor booleano que será verdadero si esta vacío
 		*/
-		bool vacio() const;
+		bool vacio() const { return monticulo_.empty(); }
 	
 		/*!
 			\brief Indica que donante está en la cima

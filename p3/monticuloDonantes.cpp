@@ -7,49 +7,59 @@ namespace ed {
 /*
  *	Parte privada
  */
-int MonticuloDonantes::getPos(const Donante& d) {
-	for (int i = 0; i < monticulo_size(); i++) {
-		if ( d == monticulo_[i] )
-			return i;
-	}
-	
-	return -1; // En caso de que no lo encuentre
-}
 
-int MonticuloDonantes::hijoIzquierdo(const int pos_padre) {
+int MonticuloDonantes::hijoIzquierdo(const unsigned int pos_padre) {
 
-	return monticulo[2*pos_padre + 1];
+	return 2*pos_padre + 1;
 }
 		
-int MonticuloDonantes::hijoDerecho(const int pos_padre) {
+int MonticuloDonantes::hijoDerecho(const unsigned int pos_padre) {
 	
-	return monticulo[2*pos_padre + 2];
+	return 2*pos_padre + 2;
 }
 		
-int MonticuloDonantes::padre(const int pos_hijo) {
+int MonticuloDonantes::padre(const unsigned int pos_hijo) {
 	
-	return monticulo[(pos_hijo - 1) / 2];
+	return (pos_hijo - 1) / 2;
 }
 
-void MonticuloDonantes::flotar(const int i) {
+void MonticuloDonantes::flotar(const unsigned int i) {
 
-	if ( i < monticulo_.size() && monticulo_[i] < padre(monticulo_[i] ) {
-		swap(monticulo_[i], padre(monticulo_[i]));
-		flotar(padre(monticulo_[i]));
+	if ( i < monticulo_.size() && monticulo_[i] <= monticulo_[padre(i)] ) {
+		swap(monticulo_[i], monticulo_[padre(i)]);
+		flotar(padre(i));
 	}
 }
 		
-void MonticuloDonantes::hundir(const int i) {
-	int i;
-	for (i = 0; i < monticulo_size(); i++) {
-		if ( d == monticulo_[i] )
-			break;
+void MonticuloDonantes::hundir(const unsigned int i) {
+
+	unsigned int hijoIzquierdo, hijoDerecho, hijoMenor;
+	hijoIzquierdo = this->hijoIzquierdo(i);
+	hijoDerecho = this->hijoDerecho(i);
+	
+	
+	// Primero buscamos cuál de los dos hijos es el menor para luego compararlo
+	if ( hijoDerecho >= monticulo_.size() ) { // Si el hijo derecho no existe
+	    // Si el hijo izquierdo tampoco existe vuelve directamente
+	    if ( hijoDerecho >= monticulo_.size() ) {
+	        return;
+        // Si solo existe el hijo derecho entonces será el menor
+	    } else {
+	        hijoMenor = hijoIzquierdo;
+	    }
+	// Si existe derecho también existe izquierdo, debido al orden de llenado
+	} else {
+	    if ( monticulo_[hijoIzquierdo] <= monticulo_[hijoDerecho] ) {
+	        hijoMenor = hijoIzquierdo;
+	    } else {
+	        hijoMenor = hijoDerecho;
+	    }
 	}
 	
-	int izq = 
+	if ( monticulo_[i] > monticulo_[hijoMenor] ) {
 	
-	if ( !(d == n) ) {
-		swap(monticulo_[i], monticu
+	    swap(monticulo_[i], monticulo_[hijoMenor]);
+	    hundir(hijoMenor); // En esta posición ya está el que era padre
 	}
 }
 
@@ -57,32 +67,33 @@ void MonticuloDonantes::hundir(const int i) {
 /*
  *	Parte pública
  */
-bool MonticuloDonantes::vacio() const {
-	if ( tam_ == 0 )
-		return true;
-	else
-		return false;
-}
 	
 Donante MonticuloDonantes::cima() const {
 	if ( monticulo_.empty() )
-		return;
+		return Donante("vacio","vacio"); // Devuelve un donante inexistente
 	else
-		return monticulo_[0];
+		return monticulo_.front();
 }
 
 void MonticuloDonantes::insertar(const Donante &d) {
 	monticulo_.push_back(d);
-	if ( padre(d) <= d )
-		monticulo_.flotar(d);
+	int pos = monticulo_.size() -1 ;
+	if ( monticulo_[padre(pos)] <= d )
+		this->flotar(monticulo_.size() -1 );
 }
 
 void MonticuloDonantes::borrar() {
-	return;
+	std::iter_swap(monticulo_.begin(), monticulo_.end());
+	monticulo_.pop_back();
+	this->hundir(0); // Hunde el nodo raíz hasta su posición
 }
 
-void MonticuloDonantes::leerMonticulo(string nombre_fichero);
+void MonticuloDonantes::leerMonticulo(string nombre_fichero) {
+return;
+}
 
-void MonticuloDonantes::grabarMonticulo(string nombre_fichero);
+void MonticuloDonantes::grabarMonticulo(string nombre_fichero) {
+return;
+}
 
 } // Fin namespace ed
