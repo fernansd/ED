@@ -290,5 +290,6 @@ void Lista<T>::removeItem() {
     size_--;
 }
 } // Fin namespace ed
+#include "lista.cpp"
 #endif
 
