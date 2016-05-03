@@ -1,2 +1,5 @@
 Sanchez Delgado,Fernando,0,negativo,10
 Ruiz Perez,Antonio,B,positivo,3
+Smith,Rosalind,AB,positivo,0
+Findlay,Verdie,B,negativo,4
+Mann,Ollie,A,positivo,7

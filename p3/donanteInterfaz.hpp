@@ -8,6 +8,10 @@ using namespace std;
 
 namespace ed {
 
+/*! 
+\brief Clase abstracta interfaz para la clase Donante
+\sa ed::Donante
+*/
 class DonanteInterfaz {
     public:
     
@@ -121,7 +125,7 @@ class DonanteInterfaz {
         
         /*! 
 		\brief Escribe por pantalla los datos de un Donante. De la forma:\n
-				\tApellidos, Nombre\n \tGrupo: grupo\n \tFactorRH: factorRH\n
+				Apellidos, Nombre\n Grupo: grupo\n FactorRH: factorRH\n
 		\pre El Donante debe existir
 		\post Ninguna
 		\sa setNombre(), setApellidos(), setGrupo(), setFactorRH()

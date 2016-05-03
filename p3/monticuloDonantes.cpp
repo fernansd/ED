@@ -12,11 +12,11 @@ namespace ed {
  */
  
 /*!
-			\brief Devuelve la posición dentro del vector del donante pasado por
-					referencia. Devolverá -1 en caso de que no encuentre el
-					Donante dentro del montículo.
-			\params d Donante que hay que buscar
-			\return Posición del donante dentro del vector
+	\brief Devuelve la posición dentro del vector del donante pasado por
+			referencia. Devolverá -1 en caso de que no encuentre el
+			Donante dentro del montículo.
+	\param d Donante que hay que buscar
+	\return Posición del donante dentro del vector
  */
 int MonticuloDonantes::getPos(const Donante &d) {
 	for (size_t i = 0; i < monticulo_.size(); i++) {
@@ -30,7 +30,7 @@ int MonticuloDonantes::getPos(const Donante &d) {
 /*!
 	\brief Devuelve la posición del hijo derecho del nodo cuya posición
 			se ha pasado por parámetro
-	\params pos_padre Posición del nodo padre
+	\param pos_padre Posición del nodo padre
 	\warning Puede devolver posiciones no existentes
 	\return Devuelve un entero como la posición
 */
@@ -42,7 +42,7 @@ int MonticuloDonantes::hijoIzquierdo(const unsigned int pos_padre) {
 /*!
 	\brief Devuelve la posición del hijo izquierdo del nodo cuya posición
 			se ha pasado por parámetro
-	\params pos_padre Posición del nodo padre
+	\param pos_padre Posición del nodo padre
 	\warning Puede devolver posiciones no existentes
 	\return Devuelve un entero como la posición
 */		
@@ -54,7 +54,7 @@ int MonticuloDonantes::hijoDerecho(const unsigned int pos_padre) {
 /*!
 	\brief Devuelve la posición del hijo izquierdo del nodo cuya posición
 			se ha pasado por parámetro
-	\params pos_padre Posición del nodo padre
+	\param pos_padre Posición del nodo padre
 	\warning Puede devolver posiciones no existentes
 	\return Devuelve un entero como la posición
 */
@@ -65,7 +65,7 @@ int MonticuloDonantes::padre(const unsigned int pos_hijo) {
 
 /*!
 	\brief Flota el nodo cuya posición se ha pasado por parámetro
-	\params i Posición del nodo a flotar
+	\param i Posición del nodo a flotar
 	\return Nada
 */
 void MonticuloDonantes::flotar(const unsigned int i) {
@@ -76,14 +76,14 @@ void MonticuloDonantes::flotar(const unsigned int i) {
     if ( i == 0 ) return;
 
 	if ( i < monticulo_.size() && monticulo_[i] <= monticulo_[padre(i)] ) {
-		swap(monticulo_[i], monticulo_[padre(i)]);
+		std::swap(monticulo_[i], monticulo_[padre(i)]);
 		flotar(padre(i));
 	}
 }
 
 /*!
 	\brief Hunde el nodo cuya posición se proporciona por parámetro
-	\params i Posición del nodo a hundir
+	\param i Posición del nodo a hundir
 	\return Nada
 */		
 void MonticuloDonantes::hundir(const unsigned int i) {
@@ -91,7 +91,6 @@ void MonticuloDonantes::hundir(const unsigned int i) {
 	unsigned int hijoIzquierdo, hijoDerecho, hijoMenor;
 	hijoIzquierdo = this->hijoIzquierdo(i);
 	hijoDerecho = this->hijoDerecho(i);
-	cout << i << "--";
 	
 	if ( i == (monticulo_.size() -1) ) return;
 	
@@ -116,7 +115,7 @@ void MonticuloDonantes::hundir(const unsigned int i) {
 	
 	if ( monticulo_[i] > monticulo_[hijoMenor] ) {
 	
-	    swap(monticulo_[i], monticulo_[hijoMenor]);
+	    std::swap(monticulo_[i], monticulo_[hijoMenor]);
 	    hundir(hijoMenor); // En esta posición ya está el que era padre
 	}
 
@@ -129,7 +128,6 @@ void MonticuloDonantes::hundir(const unsigned int i) {
 
 /*!
 	\brief Devuelve una copia del donante que está en la cima
-	\params Ninguno
 	\pre El montículo no está vacío
 	\return Devuelve el Donante que se encuentre en la cima del montículo
 */
@@ -143,7 +141,6 @@ Donante MonticuloDonantes::cima() const {
 
 /*!
 	\brief Permite insertar un nuevo Donante en el montículo
-	\params d Donante que se va a insertar
 	\return Nada
 */
 void MonticuloDonantes::insertar(const Donante &d) {
@@ -153,13 +150,12 @@ void MonticuloDonantes::insertar(const Donante &d) {
 	if (monticulo_.size() == 1) return;
 	// Si el elemento insertado incumple la condición de monticulo se actualiza
 	// el monticulo para que lo cumpla
-	if ( monticulo_[padre(pos)] <= d )
+	if ( monticulo_[padre(pos)] > d )
 		this->flotar(monticulo_.size() -1 );
 }
 
 /*!
 	\brief Borra el Donante en la cima del montículo
-	\params Ninguno
 	\pre El montículo no está vacío
 	\return Nada
 */	
@@ -181,7 +177,7 @@ void MonticuloDonantes::borrar() {
 	\brief Lee el montículo de un fichero cuyo nombre se ha pasado
 			por parámetro. El formato del fichero será: 
 			Apellidos, Nombre, Grupo, Factor RH, nº donanciones
-	\params nombre_fichero Nombre del archivo de donde leer el montículo
+	\param nombre_fichero Nombre del archivo de donde leer el montículo
 	\pre El montículo no está vacío
 	\return Nada
 */	
@@ -208,8 +204,8 @@ void MonticuloDonantes::leerMonticulo(string nombre_fichero) {
 	        getline(stream_linea, valor, ',');
 	        d.setFactorRH(valor);
 	        getline(stream_linea, valor, ',');
-	        if (!d.setDonaciones( atoi(valor.c_str()) ) ) 
-	            cout << "error";
+	        if ( !d.setDonaciones( atoi(valor.c_str()) ) ) 
+	            cout << "Error leyendo donaciones";
 	        
 	        this->insertar(d);
 	    
@@ -225,7 +221,7 @@ void MonticuloDonantes::leerMonticulo(string nombre_fichero) {
 	\brief Escribe el montículo en un fichero cuyo nombre se ha pasado
 			por parámetro. El formato del fichero será: 
 			Apellidos, Nombre, Grupo, Factor RH, nº donanciones
-	\params nombre_fichero Nombre del archivo donde grabar el montículo
+	\param nombre_fichero Nombre del archivo donde grabar el montículo
 	\pre El montículo no está vacío
 	\return Nada
 */	
@@ -244,19 +240,19 @@ void MonticuloDonantes::grabarMonticulo(string nombre_fichero) {
 	        archivo << d.getFactorRH() << ',';
 	        archivo << d.getDonaciones() << '\n';
 	        
-	        // Elimina el donante escrito en fichero para acceder al siguiente
+	        // Elimina el donante en la cima para acceder al siguiente
 	        this->borrar();
 	    }
 	} else {
 	    cout << "Error escribiendo el montículo en el fichero" << endl;
 	}
+	hundir(0);
 	
 }
 
 /*!
 	\brief Incrementa las donaciones del donante en la cima en 1.
 			Luego actualiza el orden del montículo
-	\params Ninguno
 	\pre El montículo no está vacío
 	\warning Método no definido en la interfaz de la clase
 	\return Nada

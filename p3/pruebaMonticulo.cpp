@@ -146,6 +146,8 @@ void esperarUsuario(int opc) {
 */
 void leerMonticuloFichero(MonticuloDonantes& m) {
 	m.leerMonticulo("lista-donantes.txt");
+	LUGAR(10,10);
+	printf("Lista leida del fichero: lista-donantes.txt");
 
 }
 
@@ -157,7 +159,9 @@ void leerMonticuloFichero(MonticuloDonantes& m) {
 	\return Nada
 */
 void grabarMonticulo(MonticuloDonantes& m) {
-	m.grabarMonticulo("back-lista-donantes.txt");
+	m.grabarMonticulo("guardado-lista-donantes.txt");
+	LUGAR(10,10);
+	printf("Lista escrita en el fichero: guardado-lista-donantes.txt");
 	
 }
 
