@@ -39,9 +39,9 @@ class listaInterfaz {
 		
 		virtual int getPos() const = 0;
 		
-		virtual bool goTo(int pos) const = 0;
+		virtual bool goTo(int pos) = 0;
 		
-		virtual bool search(T item) const = 0;
+		virtual bool search(T item) = 0;
 		
 		virtual T* getItem() const = 0;
 		
