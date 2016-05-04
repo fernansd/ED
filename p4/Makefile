@@ -7,18 +7,18 @@ OBJECT_FLAGS = -c -Wall -g
 EXE_FLAGS = -g -Wall
 INCLUDES = -I.
 
-MAIN = donante.o monticulo.o pruebaMonticulo.out
+MAIN = vertice.o grafo.o
 
 all:    $(MAIN)
 	@echo  Terminado
 
-vertice.o: vertice.cpp vertice.hpp
+vertice.o: vertice.hpp
 	$(CC) $(OBJECT_FLAGS) $(INCLUDES) $<  -o $@
 	
 grafo.o: grafo.cpp grafo.hpp vertice.o
 	$(CC) $(OBJECT_FLAGS) $(INCLUDES) $<  -o $@
 		
-main.out: pruebaMonticulo.cpp donante.o monticulo.o
+main.out: main.cpp grafo.cpp grafo.hpp vertice.hpp funciones.hpp funciones.cpp
 	$(CC) $(EXE_FLAGS) $^ -o $@
 
 clean:
