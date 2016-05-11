@@ -1,3 +1,6 @@
+#ifndef VERTICE_HPP
+#define VERTICE_HPP
+
 // Poner documentación de fichero
 namespace ed {
 
@@ -6,33 +9,57 @@ template<class T>
 class Vertice {
 	private:
 		T data_;
-		int label_;	
-	
+		int label_;
+
 	public:
+		Vertice() {
+			data_ = T();
+			label_ = -1;
+		}
+
+		Vertice(int etiqueta = -1, T datos = T()) {
+			data_ = datos;
+			etiqueta = etiqueta;
+		}
+
 		/*!
 			\brief Devuelve el contenido del vértice
 			\return Contenido del vértice
 		*/
-		T getData() { return data_; }
-		
+		T getData() const { return data_; }
+
 		/*!
 			\brief Devuelve la etiqueta del vértice
 			\post La etiqueta del vértice debe ser única en el grafo
 			\return Valor de la etiqueta con tipo de entero
 		*/
-		int getLabel() { return label_; }
-		
+		int getLabel() const { return label_; }
+
 		/*!
 			\brief Cambia el contenido del vértice por el pasado por referencia
 			\return Nada
 		*/
 		void setData(T const &d) { data_ = d; }
-		
+
 		/*!
 			\brief Cambia el valor de la etiqueta.
 			\return Nada
 		*/
 		void setLabel(int etiqueta) { label_ = etiqueta; }
-		
+
+		/*!
+			\brief Compara los vértices por el valor de su contenido
+			\return Devuelve true si son iguales
+		*/
+		bool operator==(Vertice<T> &v) const {
+
+			if ( this->getData() == v.getData() )
+				return true;
+			else
+				return false;
+		}
+
 };
 } // Fin namespace ed
+
+#endif
