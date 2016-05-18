@@ -18,7 +18,7 @@ namespace ed {
             this->setCursor(aux);
             return matriz_[v1.getLabel()][v2.getLabel()];
         } else {
-            return;
+            return -1;
         }
     }
 
@@ -67,7 +67,7 @@ namespace ed {
 
         // Solo se ejecuta si existen los dos vértices
 
-
+		return true;
 
     }
 
@@ -76,7 +76,7 @@ namespace ed {
         \return Devuelve true si encuentra el vertice
     */
     bool Grafo::buscarVertice(string nombre) const {
-
+		return true;
     }
 
     /*! \brief Situa el cursor en el vertice igual al proporcionado
@@ -86,8 +86,9 @@ namespace ed {
         if ( this->estaVacio() )
             return false;
         for (Vertice<string> v : vertices_) {
-            
+            break;
         }
+        return true;
     }
 
     /*!

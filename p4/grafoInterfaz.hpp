@@ -1,73 +1,48 @@
-#ifndef GRAFO_HPP
-#define GRAFO_HPP
+#ifndef GRAFOINTERFAZ_HPP
+#define GRAFOINTERFAZ_HPP
 
-#include <vector>
 #include <string>
-#include <limits> // Para el valor numérico infinito
 
 #include "vertice.hpp"
-#include "grafoInterfaz.hpp"
 
 // Poner documentación de fichero
 namespace ed {
 
-using std::vector;
 using std::string;
 
 // Documentar clase
-class Grafo : public GrafoInterfaz {
-
-	private:
-		bool es_dirigido_;
-		/// Apunta al vertice actual, mutable para permitir
-		/// grafos constantes
-		mutable size_t cursor_;
-		int etiqueta_actual_;
-		vector<Vertice<string>> vertices_;
-		vector<vector<double>> matriz_;
-
-		size_t getCursor() const { return cursor_; }
-		void setCursor(size_t cur) const { cursor_ = cur; }
-		bool existe(Vertice<string> const &v);
-
+class GrafoInterfaz {
 	public:
-		Grafo() {
-			etiqueta_actual_ = 0;
-			cursor_ = 0;
-			// Por defecto el grafo es no dirigido
-			es_dirigido_ = false;
-		}
-
 		/// Creators
-		void hacerDirigido() { es_dirigido_ = true; }
-		void hacerNoDirigido() { es_dirigido_ = false; }
-
+		virtual void hacerDirigido() = 0;
+		virtual void hacerNoDirigido() = 0;
+		
 		/// Observers
-		int numVertices() const { return vertices_.size(); }
-		int numLados() const { return matriz_.size(); }
-		bool esDirigido() const { return es_dirigido_; }
-		bool estaVacio() const { return vertices_.empty(); }
+		virtual int numVertices() const = 0;
+		virtual int numLados() const = 0;
+		virtual bool esDirigido() const = 0;
+		virtual bool estaVacio() const = 0;
 
 		/*!
 			\brief Devuelve el peso del lado que une dos vértices, si no están
 					unidos devolverá std::numeric_limits<double>::infinity()
 			\return Peso del lado con tipo double
 		*/
-		double adyacente(Vertice<string> const &v1, Vertice<string> const &v2) const;
+		virtual double adyacente(Vertice<string> const &v1, Vertice<string> const &v2) const = 0;
 
 		/*!
 			\brief Devuelve el vértice donde está situado el cursor, si el grafo
 					está vacío entonces devuelve un vértice con etiqueta -1
 			\return Devuelve el vértice con tipo Vertice<string>
 		*/
-		Vertice<string> verticeCursor() const;
+		virtual Vertice<string> verticeCursor() const = 0;
 
 		/// Mutators
 		/*!
 			\brief Añade un nuevo vértice al grafo
 			\return Nada
 		*/
-		void addVertice(Vertice<string> const &v);
+		virtual void addVertice(Vertice<string> const &v) = 0;
 
 		/*!
 			\brief Une dos vértices existentes en el grafo, si no encuentra
@@ -75,25 +50,25 @@ class Grafo : public GrafoInterfaz {
 					devuelve false
 			\return Devuelve true si ha tenido éxito
 		*/
-		bool addLado(Vertice<string> const &v1, Vertice<string> const &v2);
+		virtual bool addLado(Vertice<string> const &v1, Vertice<string> const &v2) = 0;
 
 		/*! \brief Situa el cursor en el vertice cuyo contenido
 			es el proporcionado
 			\return Devuelve true si encuentra el vertice
 		*/
-		bool buscarVertice(string nombre) const;
+		virtual bool buscarVertice(string nombre) const = 0;
 
 		/*! \brief Situa el cursor en el vertice igual al proporcionado
 			\return Devuelve true si encuentra el vertice
 		*/
-		bool goTo(Vertice<string> const &v) const;
+		virtual bool goTo(Vertice<string> const &v) const = 0;
 
 		/*!
 			\brief Situa el cursor en el inicio y devuelve el vertice.
 					Si la lista está vacía devuelve un vértice con etiqueta -1
 			\return Vertice en el cursor de tipo Vertice<string>
 		*/
-		Vertice<string> verticeInicio();
+		virtual Vertice<string> verticeInicio() = 0;
 
 		/*!
 			\brief Mueve el cursor al siguiente y devuelve el vertice.
@@ -102,16 +77,12 @@ class Grafo : public GrafoInterfaz {
 					final del vector entonces no se moverá.
 			\return Vertice en el cursor de tipo Vertice<string>
 		*/
-		Vertice<string> verticeSiguiente();
+		virtual Vertice<string> verticeSiguiente() = 0;
 
 		/*!
 			Indefinido
 		*/
-		bool afterEndVertex();
-		
-		friend void caminoMinimo(Grafo &g, vector<vector<double>> &m_dist,
-			vector<vector<double>> &m_intm, Vertice<string> &origen, 
-			Vertice<string> &destino);
+		virtual bool afterEndVertex() = 0;
 };
 } // Fin namespace ed
 
