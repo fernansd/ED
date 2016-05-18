@@ -15,10 +15,10 @@ all:    $(MAIN)
 donante.o: donante.cpp donanteInterfaz.hpp donante.hpp
 	$(CC) $(OBJECT_FLAGS) $(INCLUDES) $<  -o $@
 	
-monticulo.o: monticuloDonantes.cpp monticuloDonantesInterfaz.hpp monticuloDonantes.hpp
+monticulo.o: monticuloDonantes.cpp monticuloDonantesInterfaz.hpp monticuloDonantes.hpp donante.hpp donanteInterfaz.hpp
 	$(CC) $(OBJECT_FLAGS) $(INCLUDES) $<  -o $@
 	
-pruebaMonticulo.out: pruebaMonticulo.cpp donante.o monticulo.o
+pruebaMonticulo.out: pruebaMonticulo.cpp donante.o monticulo.o funciones.hpp funciones.cpp
 	$(CC) $(EXE_FLAGS) $^ -o $@
 
 clean:

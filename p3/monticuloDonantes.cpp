@@ -113,6 +113,8 @@ void MonticuloDonantes::hundir(const unsigned int i) {
 	    }
 	}
 	
+	// Ante número igual de donaciones se realiza comparación lexicográfica
+	// en el sobrecarga del operador> para la clase Donante
 	if ( monticulo_[i] > monticulo_[hijoMenor] ) {
 	
 	    std::swap(monticulo_[i], monticulo_[hijoMenor]);
