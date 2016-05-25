@@ -46,12 +46,10 @@ int main() {
                 
                 
             case 1: // Cargar grafo desde fichero
-                    LUGAR(10,0);
                     opcionCargarGrafoFichero(grafo);
                     break;
                     
             case 2: // Mostrar grafo por pantalla
-                    LUGAR(10,0);
                     opcionMostrarGrafo(grafo);
                     break;
                     

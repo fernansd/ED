@@ -28,7 +28,7 @@ class GrafoInterfaz {
 					unidos devolverá std::numeric_limits<double>::infinity()
 			\return Peso del lado con tipo double
 		*/
-		virtual double adyacente(Vertice<string> const &v1, Vertice<string> const &v2) const = 0;
+		virtual double adyacente(Vertice<string> const v1, Vertice<string> const v2) const = 0;
 
 		/*!
 			\brief Devuelve el vértice donde está situado el cursor, si el grafo
@@ -42,7 +42,7 @@ class GrafoInterfaz {
 			\brief Añade un nuevo vértice al grafo
 			\return Nada
 		*/
-		virtual void addVertice(Vertice<string> const &v) = 0;
+		virtual void addVertice(Vertice<string> const v) = 0;
 
 		/*!
 			\brief Une dos vértices existentes en el grafo, si no encuentra
@@ -50,7 +50,7 @@ class GrafoInterfaz {
 					devuelve false
 			\return Devuelve true si ha tenido éxito
 		*/
-		virtual bool addLado(Vertice<string> const &v1, Vertice<string> const &v2,
+		virtual bool addLado(Vertice<string> const v1, Vertice<string> const v2,
 		    double peso) = 0;
 
 		/*! \brief Situa el cursor en el vertice cuyo contenido
@@ -62,7 +62,7 @@ class GrafoInterfaz {
 		/*! \brief Situa el cursor en el vertice igual al proporcionado
 			\return Devuelve true si encuentra el vertice
 		*/
-		virtual bool goTo(Vertice<string> const &v) const = 0;
+		virtual bool goTo(Vertice<string> const v) const = 0;
 
 		/*!
 			\brief Situa el cursor en el inicio y devuelve el vertice.

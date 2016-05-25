@@ -14,10 +14,15 @@ class Vertice {
 	public:
 		Vertice() {
 			data_ = T();
-			label_ = -1;
+			label_ = 0;
+		}
+		
+		Vertice(T datos) {
+		    data_ = datos;
+		    label_ = 0;
 		}
 
-		Vertice(int etiqueta = -1, T datos = T()) {
+		Vertice(int etiqueta = 0, T datos = T()) {
 			data_ = datos;
 			etiqueta = etiqueta;
 		}

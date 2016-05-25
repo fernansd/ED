@@ -50,7 +50,7 @@ class Grafo : public GrafoInterfaz {
 					unidos devolverá std::numeric_limits<double>::infinity()
 			\return Peso del lado con tipo double
 		*/
-		double adyacente(Vertice<string> const &v1, Vertice<string> const &v2) const;
+		double adyacente(Vertice<string> const v1, Vertice<string> const v2) const;
 
 		/*!
 			\brief Devuelve el vértice donde está situado el cursor, si el grafo
@@ -64,7 +64,7 @@ class Grafo : public GrafoInterfaz {
 			\brief Añade un nuevo vértice al grafo
 			\return Nada
 		*/
-		void addVertice(Vertice<string> const &v);
+		void addVertice(Vertice<string> const v);
 
 		/*!
 			\brief Une dos vértices existentes en el grafo, si no encuentra
@@ -73,7 +73,7 @@ class Grafo : public GrafoInterfaz {
 					el peso del lado, su valor por defecto será 0.
 			\return Devuelve true si ha tenido éxito
 		*/
-		bool addLado(Vertice<string> const &v1, Vertice<string> const &v2,
+		bool addLado(Vertice<string> const v1, Vertice<string> const v2,
 		    double peso = 0);
 
 		/*! \brief Situa el cursor en el vertice cuyo contenido
@@ -85,7 +85,7 @@ class Grafo : public GrafoInterfaz {
 		/*! \brief Situa el cursor en el vertice igual al proporcionado
 			\return Devuelve true si encuentra el vertice
 		*/
-		bool goTo(Vertice<string> const &v) const;
+		bool goTo(Vertice<string> const v) const;
 
 		/*!
 			\brief Situa el cursor en el inicio y devuelve el vertice.
@@ -109,6 +109,8 @@ class Grafo : public GrafoInterfaz {
 			\return Valor booleano, que será true si se está en el último vértice
 		*/
 		bool quedanVertices();
+		
+		vector<Vertice<string>> obtenerAdyacentes();
 		
 		vector<vector<double>> devuelveMatriz() { return matriz_; }
 		

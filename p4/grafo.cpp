@@ -16,7 +16,7 @@ namespace ed {
 	    // representen lados entre dos vértices
         for (vector<double> vector : matriz_) {
             for (double peso : vector) {
-                if ( peso != infinito)
+                if ( peso != infinito && peso != 0)
                     num_lados++;
             }
         
@@ -36,8 +36,8 @@ namespace ed {
 
         \return Peso del lado con tipo double
     */
-    double Grafo::adyacente(Vertice<string> const &v1,
-        Vertice<string> const&v2) const {
+    double Grafo::adyacente(Vertice<string> const v1,
+        Vertice<string> const v2) const {
         int aux = this->getCursor();
         
         // goTo devuelve false si no encuentra el vértice, por lo que
@@ -63,7 +63,8 @@ namespace ed {
             return vertices_[cursor_];
         } else {
             // Devuelve un vértice inválido (etiqueta igual a -1)
-            return Vertice<std::string>(-1,"");
+            Vertice<string> aux(-1,"");
+            return aux;
         }
     }
 
@@ -72,14 +73,15 @@ namespace ed {
         \brief Añade un nuevo vértice al grafo
         \return Nada
     */
-    void Grafo::addVertice(Vertice<string> const &v) {
+    void Grafo::addVertice(Vertice<string> const v) {
         // Insertamos el vértice en el vector de vértices
         vertices_.push_back(v);
         
         // Comprobamos si la matriz está vacía (es el primer vértice )
         if (matriz_.empty()) {
+            // El primer vértice tiene coste 0 consigo mismo
             matriz_.push_back(
-                vector<double>(1, std::numeric_limits<double>::infinity()) );
+                vector<double>(1, 0));
             // Ya no se necesitan hacer más operaciones cuando se inserta
             // el primer vértice
             return;
@@ -88,12 +90,14 @@ namespace ed {
         // Inserta un nuevo elemento en cada fila de los vértices
         // inicialmente vale infinito. Representa un enlace con el nuevo
         // vértice insertado
-        for (vector<double> vector : matriz_) {
-            vector.push_back(std::numeric_limits<double>::infinity());
+        for (size_t i = 0; i < matriz_.size(); i++) {
+            matriz_[i].push_back(std::numeric_limits<double>::infinity());
         }
         // Crea un vector para los lados del nuevo vértice
         vector<double> aux(vertices_.size(),
                             std::numeric_limits<double>::infinity());
+        // Cada nodo consigo mismo se une con coste 0
+        aux[aux.size()-1] = 0;
         matriz_.push_back(aux);
 
     }
@@ -104,7 +108,7 @@ namespace ed {
                 devuelve false
         \return Devuelve true si ha tenido éxito
     */
-    bool Grafo::addLado(Vertice<string> const &v1, Vertice<string> const &v2,
+    bool Grafo::addLado(Vertice<string> const v1, Vertice<string> const v2,
         double peso) {
         
         // Permite restablecer el estado del cursor
@@ -145,13 +149,25 @@ namespace ed {
         \return Devuelve true si encuentra el vertice
     */
     bool Grafo::buscarVertice(string nombre) const {
-		return true;
+		
+		// Recorre el vector de vértices en busca de uno con el mismo nombre
+		// Usa el vector de vértices directamente para evitar alterar el
+		// estado del cursor.
+		for (size_t i = 0; i < vertices_.size(); i++) {
+            // Si lo encuentra, sitúa el cursor encima y devuelve true
+		    if ( vertices_[i].getData() == nombre )
+		        cursor_ = i;
+		        return true;
+		}
+		
+		// Si llega aquí devuelve false, porque no ha encontrado el vértice
+		return false;
     }
 
     /*! \brief Situa el cursor en el vertice igual al proporcionado
         \return Devuelve true si encuentra el vertice
     */
-    bool Grafo::goTo(Vertice<string> const &v) const {
+    bool Grafo::goTo(Vertice<string> const v) const {
         if ( this->estaVacio() )
             return false;
         
@@ -175,8 +191,8 @@ namespace ed {
     Vertice<string> Grafo::verticeInicio() {
         // Si está vacio el grafo devuelve un vértice nulo
         if ( this->estaVacio() ) {
-            return Vertice<string>(-1);
-        
+            Vertice<string> aux(-1,"");
+            return aux;        
         } else {
             // Situa el cursor en el inicio y devuelve el vértice inicial
             this->setCursor(0);
@@ -192,8 +208,10 @@ namespace ed {
         \return Vertice en el cursor de tipo Vertice<string>
     */
     Vertice<string> Grafo::verticeSiguiente() {
-        if ( cursor_ == (vertices_.size() -1) )
-            return Vertice<string>(-1);
+        if ( cursor_ == (vertices_.size() -1) ) {
+            Vertice<string> aux(-1,"");
+            return aux;
+        }
         cursor_++;
         return verticeCursor();
     }
@@ -209,6 +227,19 @@ namespace ed {
             return false;
         else
             return true;
+    }
+    
+    vector<Vertice<string>> Grafo::obtenerAdyacentes() {
+        vector<Vertice<string>> adyacentes;
+        double infinito = std::numeric_limits<double>::infinity();
+        
+        for (size_t i = 0; i < matriz_.size(); i++) {
+            if ( matriz_[cursor_][i] != infinito && matriz_[cursor_][i] != 0) {
+                adyacentes.push_back(vertices_[i]);
+            }
+        }
+        
+        return adyacentes;
     }
 
 }
