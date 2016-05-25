@@ -10,6 +10,7 @@ namespace ed {
 using std::string;
 
 /*!
+    \class GrafoInterfaz grafoInterfaz.hpp "./grafoInterfaz.hpp"
     \brief Clase abstracta que define la interfaz de lo que sería una clase
             de grafo. Permite grafos tanto dirigidos como no dirigidos.
             El grafo se considera estático por lo que solo se modificará en la
@@ -17,14 +18,30 @@ using std::string;
 */
 class GrafoInterfaz {
 	public:
-		/// Creators
+		/*!
+		    \brief Permite fijar el comportamiento del grafo a grafo dirigido
+		    \warning Si se cambia el tipo de grafo el comportamiento no
+		            está definido.
+		*/
 		virtual void hacerDirigido() = 0;
+		
+		/*!
+		    \brief Permite fijar el comportamiento del grafo a grafo no dirigido
+		    \warning Si se cambia el tipo de grafo el comportamiento no
+		            está definido.
+		*/
 		virtual void hacerNoDirigido() = 0;
 		
-		/// Observers
+		/// Devuelve un valor entero como número de vértices
 		virtual int numVertices() const = 0;
+		
+		/// Devuelve un valor entero como número de lados en el grafo
 		virtual int numLados() const = 0;
+		
+		/// Devuelve true en caso de que el grafo esté fijado a grafo dirigido
 		virtual bool esDirigido() const = 0;
+		
+		/// Devuelve true si el grafo no contiene ningún vértice
 		virtual bool estaVacio() const = 0;
 
 		/*!
@@ -41,7 +58,6 @@ class GrafoInterfaz {
 		*/
 		virtual Vertice<string> verticeCursor() const = 0;
 
-		/// Mutators
 		/*!
 			\brief Añade un nuevo vértice al grafo
 			\return Nada
@@ -85,7 +101,9 @@ class GrafoInterfaz {
 		virtual Vertice<string> verticeSiguiente() = 0;
 
 		/*!
-			Indefinido
+			\brief Devuelve true, cuando al usar verticeSiguiente() se estaría
+			        accediendo a un vértice no existente.
+			\return Valor booleano, que será true si se está en el último vértice
 		*/
 		virtual bool quedanVertices() = 0;
 };
