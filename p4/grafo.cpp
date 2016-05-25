@@ -155,9 +155,10 @@ namespace ed {
 		// estado del cursor.
 		for (size_t i = 0; i < vertices_.size(); i++) {
             // Si lo encuentra, sitúa el cursor encima y devuelve true
-		    if ( vertices_[i].getData() == nombre )
-		        cursor_ = i;
+		    if ( vertices_[i].getData() == nombre ) {
+		        this->setCursor(i);
 		        return true;
+		    }
 		}
 		
 		// Si llega aquí devuelve false, porque no ha encontrado el vértice
@@ -229,6 +230,10 @@ namespace ed {
             return true;
     }
     
+    /*!
+    	\brief Devuelve un vector con los vértices adyacentes al vértice
+    			seleccionado por el cursor interno del grafo.
+    */
     vector<Vertice<string>> Grafo::obtenerAdyacentes() {
         vector<Vertice<string>> adyacentes;
         double infinito = std::numeric_limits<double>::infinity();

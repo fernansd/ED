@@ -93,7 +93,6 @@ class Grafo : public GrafoInterfaz {
 		*/
 		Vertice<string> verticeCursor() const;
 
-		/// Mutators
 		/*!
 			\brief Añade un nuevo vértice al grafo
 			\return Nada

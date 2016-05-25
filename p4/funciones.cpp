@@ -4,6 +4,8 @@
 #include <iostream> // Entrada y salida por consola
 #include <fstream> // Manejar ficheros
 #include <sstream> // Leer de fichero con stream
+#include <locale>
+#include <string>
 
 #include "grafo.hpp"
 #include "macros.hpp"
@@ -16,10 +18,17 @@ using std::cin;
 
 namespace ed {
 
+/*!
+	\brief Función que aplica el algoritmo de Floyd sobre un grafo. Para 
+			devolver los resultados se le pasan por referencia una matriz de
+			distancias y una matriz de intermedios.
+*/
 void aplicarFloyd(Grafo &g, vector<vector<double>> &m_dist, 
 	vector<vector<int>> &m_intm) {
 	
 	int n_vertices = g.numVertices();
+	
+	m_dist = g.devuelveMatriz();
 	
 	for (int k = 0; k < n_vertices; k++) {
 		for (int i = 0; i < n_vertices; i++) {
@@ -35,7 +44,12 @@ void aplicarFloyd(Grafo &g, vector<vector<double>> &m_dist,
 	}
 	return;
 }
-	
+
+/*!
+	\brief Función que imprime por pantalla la distancia entre dos nodos que
+			pide al usuario. Luego muestra el camino que se debe recorrer
+			para llegar del inicio al fin.
+*/
 void caminoMinimo(Grafo &g, vector<vector<double>> &m_dist,
 	vector<vector<int>> &m_intm, Vertice<string> &origen, 
 	Vertice<string> &destino) {
@@ -51,22 +65,23 @@ void caminoMinimo(Grafo &g, vector<vector<double>> &m_dist,
 	
 	vector<int> camino;
 	int siguiente_nodo = pos_origen;
+	camino.push_back(pos_origen);
 	while (true) {
 		camino.push_back(m_intm[siguiente_nodo][pos_destino]);
-		
 		siguiente_nodo = m_intm[siguiente_nodo][pos_destino];
 		
 		if ( siguiente_nodo == -1 )
 			break;
 		
 	}
-	camino.push_back(pos_destino);
+	camino[camino.size()-1] = pos_destino;
 	
 	cout << "El camino es:" << endl;
 	
 	for (size_t i = 0; i < camino.size(); i++) {
 	    cout << g.vertices_[camino[i]].getData() << endl;
 	}
+	getchar();
 	
 	return;
 }
@@ -120,6 +135,11 @@ void opcionCargarGrafoFichero(Grafo &grafo) {
 }
 
 void opcionMostrarGrafo(Grafo &grafo) {
+	if (grafo.estaVacio()) {
+		LUGAR(10,10);
+		cout << "El grafo está vacío" << endl;
+	}
+
     LUGAR(2,0);
     cout << "Impresión del grafo (nodos: " << grafo.numVertices();
     cout << ", lados: " << grafo.numLados() << "):" << endl;
@@ -132,6 +152,8 @@ void opcionMostrarGrafo(Grafo &grafo) {
         cout << " conecta con:" << endl;
         n_lineas += 2;
         
+        // Este bucle se encarga imprimir por pantalla los vértices adyacentes
+        // al vértice seleccionado por el cursor interno del grafo
         vector<Vertice<string>> ady = grafo.obtenerAdyacentes();
         for (size_t i = 0; i < ady.size(); i++) {
             if ( i == (ady.size() -1)) {
@@ -215,13 +237,24 @@ void opcionAplicarFloyd(Grafo &grafo) {
     cout << "Introduce el nombre de otro vértice: ";
     string nombre2;
     cin >> nombre2;
+
+    std::locale loc; // Necesario para que la conversión sera correcta
+    				 // Se encarga de establecer el alfabeto usado
+    				 
+	// El bucle se encarga de que el nombre1 estén en mayúsculas
+    for (std::string::size_type i=0; i<nombre1.length(); ++i)
+    	nombre1[i] = std::toupper(nombre1[i],loc);
+
+   	// El bucle se encarga de que el nombre2 estén en mayúsculas
+    for (std::string::size_type i=0; i<nombre2.length(); ++i)
+    	nombre2[i] = std::toupper(nombre2[i],loc);
     
     // Este método devuelve true en caso de que encuentre el vértice y
     // deja el cursor apuntandole
-    if (grafo.buscarVertice(nombre1)) {
+    if ( grafo.goTo(Vertice<string>(nombre1)) ) {
         Vertice<string> v1 = grafo.verticeCursor();
         
-        if (grafo.buscarVertice(nombre2)) {
+        if ( grafo.goTo(Vertice<string>(nombre2)) ) {
             // Si entra aquí existen los dos vértices
             Vertice<string> v2 = grafo.verticeCursor();
             
@@ -237,17 +270,6 @@ void opcionAplicarFloyd(Grafo &grafo) {
     }
 }
 
-/*! 
-    \brief Detiene la ejecución del programa hasta que el usuario presione la
-            la tecla ENTER. Además se lo indica mediante un mensaje en la parte
-            inferior de la pantalla. 
-            Puede recibir un parámetro cuyo valor por
-            defecto es 0. En este caso dejará no borrará el contenido del
-            terminal antes de imprimir el mensaje. En caso de que valga 1,
-            si lo borrará.
-	\params opc Si vale 1, borrará la pantalla pantalla antes de seguir
-	\return Nada
-*/
 void esperarUsuario(int opc) {
     
     if (opc == 1) 

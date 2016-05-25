@@ -25,7 +25,7 @@ main.out: main.cpp grafo.cpp grafo.hpp grafoInterfaz.hpp vertice.hpp funciones.h
 	$(CC) $(EXE_FLAGS) $(INCLUDES) $^ -o $@
 
 clean:
-	$(RM) *.o *~ $(MAIN) log-*.txt
+	$(RM) -r *.o *~ $(MAIN) log-*.txt html/
 
 dist: 
 	tar zcvf $(PROJECT_NAME).tar.gz *.cpp *.hpp Makefile Doxyfile

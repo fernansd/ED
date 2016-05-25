@@ -7,10 +7,10 @@
 */
 #include <iostream>
 
-#include "macros.hpp"
-#include "vertice.hpp"
-#include "grafo.hpp"
-#include "funciones.hpp"
+#include "macros.hpp" // Cabecera para el formateo de la salida por pantalla
+#include "vertice.hpp" // Cabecera de la clase Vertice
+#include "grafo.hpp" // Cabecera de la clase Grafo
+#include "funciones.hpp" // Cabecera de las funciones genéricas
 
 
 using namespace ed;
