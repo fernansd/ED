@@ -50,7 +50,8 @@ class GrafoInterfaz {
 					devuelve false
 			\return Devuelve true si ha tenido éxito
 		*/
-		virtual bool addLado(Vertice<string> const &v1, Vertice<string> const &v2) = 0;
+		virtual bool addLado(Vertice<string> const &v1, Vertice<string> const &v2,
+		    double peso) = 0;
 
 		/*! \brief Situa el cursor en el vertice cuyo contenido
 			es el proporcionado
@@ -82,7 +83,7 @@ class GrafoInterfaz {
 		/*!
 			Indefinido
 		*/
-		virtual bool afterEndVertex() = 0;
+		virtual bool quedanVertices() = 0;
 };
 } // Fin namespace ed
 

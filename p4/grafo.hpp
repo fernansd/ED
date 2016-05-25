@@ -22,21 +22,18 @@ class Grafo : public GrafoInterfaz {
 		/// Apunta al vertice actual, mutable para permitir
 		/// grafos constantes
 		mutable size_t cursor_;
-		int etiqueta_actual_;
 		vector<Vertice<string>> vertices_;
 		vector<vector<double>> matriz_;
 
-		size_t getCursor() const { return cursor_; }
-		void setCursor(size_t cur) const { cursor_ = cur; }
-		bool existe(Vertice<string> const &v);
-
 	public:
 		Grafo() {
-			etiqueta_actual_ = 0;
 			cursor_ = 0;
 			// Por defecto el grafo es no dirigido
 			es_dirigido_ = false;
 		}
+		
+		size_t getCursor() const { return cursor_; }
+		void setCursor(size_t cur) const { cursor_ = cur; }
 
 		/// Creators
 		void hacerDirigido() { es_dirigido_ = true; }
@@ -44,7 +41,7 @@ class Grafo : public GrafoInterfaz {
 
 		/// Observers
 		int numVertices() const { return vertices_.size(); }
-		int numLados() const { return matriz_.size(); }
+		int numLados() const;
 		bool esDirigido() const { return es_dirigido_; }
 		bool estaVacio() const { return vertices_.empty(); }
 
@@ -72,10 +69,12 @@ class Grafo : public GrafoInterfaz {
 		/*!
 			\brief Une dos vértices existentes en el grafo, si no encuentra
 					alguno de los vértices, no realizar ninguna acción y
-					devuelve false
+					devuelve false. Se puede pasar como parámetro opcional
+					el peso del lado, su valor por defecto será 0.
 			\return Devuelve true si ha tenido éxito
 		*/
-		bool addLado(Vertice<string> const &v1, Vertice<string> const &v2);
+		bool addLado(Vertice<string> const &v1, Vertice<string> const &v2,
+		    double peso = 0);
 
 		/*! \brief Situa el cursor en el vertice cuyo contenido
 			es el proporcionado
@@ -105,13 +104,19 @@ class Grafo : public GrafoInterfaz {
 		Vertice<string> verticeSiguiente();
 
 		/*!
-			Indefinido
+			\brief Devuelve true, cuando al usar verticeSiguiente() se estaría
+			        accediendo a un vértice no existente.
+			\return Valor booleano, que será true si se está en el último vértice
 		*/
-		bool afterEndVertex();
+		bool quedanVertices();
+		
+		vector<vector<double>> devuelveMatriz() { return matriz_; }
+		
+		vector<Vertice<string>> devuelveVertices() { return vertices_; }
 		
 		friend void caminoMinimo(Grafo &g, vector<vector<double>> &m_dist,
-			vector<vector<double>> &m_intm, Vertice<string> &origen, 
-			Vertice<string> &destino);
+	        vector<vector<int>> &m_intm, Vertice<string> &origen, 
+	        Vertice<string> &destino);
 };
 } // Fin namespace ed
 
