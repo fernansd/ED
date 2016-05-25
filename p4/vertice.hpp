@@ -1,15 +1,19 @@
 #ifndef VERTICE_HPP
 #define VERTICE_HPP
 
-// Poner documentación de fichero
 namespace ed {
 
-// Documentar clase
+/*!
+    \brief Esta clase representa un vértice para ser usado dentro de un grafo.
+            Permite guardar datos los cuales indentificarán al vértice, así
+            como una etiqueta que permite almacenar información extra sobre
+            las características del vértice.
+*/
 template<class T>
 class Vertice {
 	private:
-		T data_;
-		int label_;
+		T data_; /// Miembro que almacena los datos del vértice
+		int label_; /// Miembro que permite dar información extra sobre el vértice
 
 	public:
 		Vertice() {
@@ -17,11 +21,13 @@ class Vertice {
 			label_ = 0;
 		}
 		
+		/// Permite crear un vertice proporcionando los datos del mismo
 		Vertice(T datos) {
 		    data_ = datos;
 		    label_ = 0;
 		}
 
+        /// Permite darle valores a los miembros del vértice
 		Vertice(int etiqueta = 0, T datos = T()) {
 			data_ = datos;
 			etiqueta = etiqueta;

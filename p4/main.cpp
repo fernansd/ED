@@ -1,3 +1,10 @@
+/*!
+  \mainpage
+  \brief    Programa de prueba de la clase Grafo y funciones complementarias
+  \author   Fernando Sánchez Delgado
+  \date     18 / 5 / 2016
+  \version  1.0
+*/
 #include <iostream>
 
 #include "macros.hpp"

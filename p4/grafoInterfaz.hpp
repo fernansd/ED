@@ -5,12 +5,16 @@
 
 #include "vertice.hpp"
 
-// Poner documentación de fichero
 namespace ed {
 
 using std::string;
 
-// Documentar clase
+/*!
+    \brief Clase abstracta que define la interfaz de lo que sería una clase
+            de grafo. Permite grafos tanto dirigidos como no dirigidos.
+            El grafo se considera estático por lo que solo se modificará en la
+            creación del mismo.
+*/
 class GrafoInterfaz {
 	public:
 		/// Creators

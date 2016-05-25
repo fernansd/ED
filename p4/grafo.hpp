@@ -8,7 +8,6 @@
 #include "vertice.hpp"
 #include "grafoInterfaz.hpp"
 
-// Poner documentación de fichero
 namespace ed {
 
 using std::vector;
