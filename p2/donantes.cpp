@@ -1,7 +1,11 @@
-#include "lista.hpp"
+#include <sstream>
+#include <fstream>
 
+#include "lista.hpp"
 #include "donante.hpp"
 #include "donantes.hpp"
+
+#include "macros.hpp"
 
 using namespace std;
 
@@ -9,16 +13,28 @@ namespace ed {
 
     Donantes::Donantes(string archivo_donantes) {
         ifstream archivo(archivo_donantes.c_str());
+        string linea;
+        
         if ( archivo.is_open() ) {
-            Donante d;
-            string cadena;
-            while ( getline(archivo, cadena, ',') ) {
-                d.setApellidos(cadena);
-                getline(archivo, cadena, ',');
-                d.setNombre(cadena);
-                getline(archivo, cadena, ',');
-                d.setGrupo(cadena);
-                getline(archivo, cadena, ',');
+            
+            // Obtiene las líneas completas y luego extrae de ellas los datos
+            while ( getline(archivo, linea) ) {
+                Donante d;
+                string valor;
+                stringstream stream_linea(linea);
+                
+                // Obtiene de la línea leída cada uno de los valores necesarios
+                getline(stream_linea, valor, ',');
+                d.setApellidos(valor);
+                getline(stream_linea, valor, ',');
+                d.setNombre(valor);
+                getline(stream_linea, valor, ',');
+                d.setGrupo(valor);
+                getline(stream_linea, valor, ',');
+                d.setFactorRH(valor);
+                
+                // Añade el donante a la lista
+                this->insertaDonante(d);
             }
             archivo.close();
 
@@ -47,15 +63,30 @@ namespace ed {
     }
 
     void Donantes::insertaDonante(const Donante &d) {
-        lista_.goTo(lista_.size()-1 );
+        if (!(lista_.size() == 0)) {
+            lista_.goTo(lista_.size()-1 );
+        }
         lista_.insertAfter(d);
     }
+    
+    Donante Donantes::getDonante(const int pos) {
 
-    void Donantes::borrarDonante(Donante &d) {
-        if ( lista_.search(d) )
+        lista_.goTo(pos);        
+        Donante* d = lista_.getItem();
+        
+        lista_.goTo(0);
+        
+        return *d;
+    }
+
+    bool Donantes::borrarDonante(Donante &d) {
+    
+        if ( lista_.search(d) ) {
             lista_.removeItem();
-        else
-            cout << "Error borrando donante, no existe" << endl;
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /// Devuelve -1 si no encuentra el donante
@@ -73,9 +104,12 @@ namespace ed {
         *aux = d;
     }
     
-    void Donantes::escribirDonantes() const {
+    void Donantes::escribirDonantes() {
+
         Donante* aux;
-        cout << "Lista de donantes:\n" << endl;
+        SUBRAYADO;
+        printf("Lista de donantes:\n");
+        APAGA;
         for (int i = 0; i < lista_.size(); i++) {
             lista_.goTo(i);
             aux = lista_.getItem();

@@ -1,22 +1,29 @@
+/*!
+  \mainpage
+  \brief    Programa de prueba de las clases Donante, Lista y Donantes
+  \author   Fernando Sánchez Delgado
+  \date     1 / 6 / 2016
+  \version  1.1
+*/
+
 // Necesario incluirlo para el uso de las macros del menu
 #include <cstdio>
+#include <iostream>
+#include <limits>
 
-// Cabecera que contiene las macros para dar formato a la salida de terminal
-#include "../menu/macros.hpp"
-
+#include "macros.hpp"
+#include "funciones.hpp"
 #include "donante.hpp"
 #include "donantes.hpp"
+
 
 using namespace std;
 using namespace ed;
 
-// Función para detener la ejecución hasta que el usuario presione ENTER
-void esperarUsuario(int opc = 0);
-
 int main() {
     
-    int opcion;
-    Donantes l;
+    int opcion ;
+    Donantes lista;
     
     do {
         BORRAR;
@@ -42,12 +49,12 @@ int main() {
         
         LUGAR(15,10);
         printf("Introduce la opcion -> ");
-        scanf("%d", &opcion);
+//        scanf("%d\n", &opcion);
+        std::cin >> opcion;
         getchar();
-                
+        
         BORRAR;
         
-        // Evalúa la opción introducida por el usuario
         switch (opcion) {
             case 0: // Opción para acaba el programa
                 LUGAR(10,10);
@@ -57,24 +64,42 @@ int main() {
                 break;
                 
             case 1: // Comprueba si hay donantes en lista
-                    LUGAR(10,0);
-                    
+                    LUGAR(10,10);
+                    if (lista.estaVacia()) {
+                        printf("La lista está vacía");
+                    } else {
+                        printf("Hay donantes en la lista");
+                    }
                     break;
                     
-            case 2: // Opción para escribir los datos del donante d1 por teclado
-                    LUGAR(8,9);
-                    
-                    
+            case 2: // Carga lista desde un fichero
+                    cargarLista(lista);                    
                     break;
                     
-            case 3: // Opción para modificar los datos del donante d1
-                    // de manera individual
+            case 3: // Graba la lista a un fichero
+                    grabarLista(lista);
                     break;
                     
-            case 4: // Opción para comparar lexicográficamente los donante d1
-                    // y d2. Si no se ha modificado d1 (es decir, no se han
-                    // elegido otras opciones antes), deben de ser iguales.
+            case 4: // Pide un donante por teclado y lo inserta en la lista
+                    insertarDonante(lista);
+                    break;
+            
+            case 5: // Modifica la información de un donante
+                    modificaDonante(lista);
+                    break;
                     
+            case 6: // Elimina un donante de la lista
+                    eliminaDonante(lista);
+                    break;
+                    
+            case 7: // Muestra por pantalla la lista de donantes
+                    if (lista.estaVacia()) {
+                        LUGAR(10,10);
+                        printf("La lista está vacía");
+                    } else {
+                        LUGAR(10,10);
+                        lista.escribirDonantes();
+                    }
                     break;
                     
             default: // Opción por defecto cuando se introduce un valor que no
@@ -88,37 +113,12 @@ int main() {
         // transición hacia el menú principal que requiere que el usuario
         // presione la tecla ENTER para continuar
         esperarUsuario();
-        
     } while(opcion != 0);
+    
+    // Limpia la pantalla y posiciona el cursor en la esquina superior izquierda
+    BORRAR;
+    LUGAR(0,0);
 
 return 0;
 }
 
-/*! 
-    \brief Detiene la ejecución del programa hasta que el usuario presione la
-            la tecla ENTER. Además se lo indica mediante un mensaje en la parte
-            inferior de la pantalla. 
-            Puede recibir un parámetro cuyo valor por
-            defecto es 0. En este caso dejará no borrará el contenido del
-            terminal antes de imprimir el mensaje. En caso de que valga 1,
-            si lo borrará.
-	\params opc Si vale 1, borrará la pantalla pantalla antes de seguir
-	\return Nada
-*/
-void esperarUsuario(int opc) {
-    
-    if (opc == 1) 
-        BORRAR;
-        
-    LUGAR(23,25);
-    printf("pulse ");
-    SUBRAYADO;
-    printf("ENTER");
-    APAGA;
-    printf(" para ");
-    INVERSO;
-    printf("continuar");
-    APAGA;
-    getchar();
-    BORRAR;
-}

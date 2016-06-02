@@ -1,6 +1,8 @@
 #ifndef LISTA_HPP
 #define LISTA_HPP
 
+#include <cassert>
+
 #include "listaInterfaz.hpp"
 
 using namespace std;
@@ -9,47 +11,99 @@ namespace ed {
 
 template <class T> class listaInterfaz;
 
+/*!
+    \class Node lista.hpp "./lista.hpp"
+    \brief Clase que representa un nodo dentro de una lista doblemente
+            enlazada. Para ello posee dos punteros (anterior y siguiente),
+            así como un campo que permite almacenar datos de cualquier tipo.
+    \warning Esta clase está diseñada para integrarse dentro de la clase Lista
+*/
 template < class T >
 class Node {
 
     private:
+        /// Puntero hacia un elemento de tipo T
         T* item_;
+        /// Puntero hacia un nodo anterior de tipo Node<T>
         Node<T>* prev_;
+        /// Puntero hacia un nodo posterior de tipo Node<T>
         Node<T>* next_;
         
     public:
-        Node(Node* prev = nullptr, Node* next = nullptr, T* item = nullptr) {
+        /*!
+            \brief Constructor por defecto de la clase Node.
+                    Permite parámetros opcionales para todos sus campos.
+            \param prev Puntero hacia nodo anterior. Valor por defecto nullptr
+            \param next Puntero a nodo posterior. Valor por defecto nullptr
+            \param item Puntero hacia un elemento tipo T. Valor por defecto nullptr
+        */
+        Node(Node<T>* prev = nullptr, Node<T>* next = nullptr, T* item = nullptr) {
             item_ = item;
             prev_ = prev;
             next_ = next;
         }
         
-        ~Node() { delete *item_; }
+        ~Node() { delete item_; }
         
-        Node* getNext() const { return next_; }
+        /// Devuelve el puntero al siguiente
+        Node<T>* getNext() const { return next_; }
         
-        Node* getPrev() const { return prev_; }
+        /// Devuelve el puntero al anterior
+        Node<T>* getPrev() const { return prev_; }
         
+        /// Devuelve un puntero a un elemento tipo T
         T* getItem() const { return item_; }
         
-        void setNext(Node* next) { next_ = next; }
+        /// Cambia el valor del puntero al siguente
+        void setNext(Node<T>* next) { next_ = next; }
         
-        void setPrev(Node* prev) { prev_ = prev; }
+        /// Cambia el valor de puntero al anterior
+        void setPrev(Node<T>* prev) { prev_ = prev; }
         
+        /// Cambia el valor del puntero al dato tipo T
         void setItem(T* item) { item_ = item; }
 };
 
+/*!
+    \class Lista lista.hpp "./lista.hpp"
+    \brief Clase que implementa la interfaz abstraca listaInterfaz. La clase
+            se trata de una lista doblemente enlazada con cursor. Y permite el
+            uso de cualquier tipo de dato como elemento de la lista.
+*/
 template <class T> 
 class Lista : public listaInterfaz<T> { 
    
     private:
-        int pos_, size_;
+        /// Cursor de posición de la lista
+        int pos_;
+        /// Número de elementos en la lista
+        int size_;
+        /// Cursor de la lista
         Node<T>* cursor_;
+        /// Puntero que apunta al primer nodo
         Node<T>* head_;
+        /*!
+            \brief Permite mover el cursor a una posición más.
+                    Es seguro usarlo al final de la lista (no se mueve).
+            \return Si no se mueve devuelve false
+        */
         bool next();
+        
+        /*!
+            \brief Permite mover el cursor a una posición anterior.
+                    Es seguro usarlo al principio de la lista (no se mueve).
+            \return Si no se mueve devuelve false
+        */
         bool prev();
     
     public:
+        Lista() {
+            cursor_ = nullptr;
+            head_ = nullptr;
+            pos_ = 0;
+            size_ = 0;
+        }
+        
         /*! 
         \brief Devuelve el número de elementos en la lista.    
         \note Los parámetros tienen valores por defecto
@@ -66,229 +120,71 @@ class Lista : public listaInterfaz<T> {
         \post Devuelve false si size() > 0
         */
         bool isEmpty() const;
-
+        
+        /*! 
+		\brief Devuelve la posición del cursor
+		\return Posición del cusor tipo entero
+		*/
         int getPos() const { return pos_; }
-
+        
+        /*! 
+		\brief Modifica la posición del cursor
+		\param pos Posición a la cual cambiar pos_
+		\return Devuelve true si es una posición válida
+		*/
+        bool setPos(int pos);
+        
+        /*! 
+		\brief Mueve el puntero a la posición proporcionada
+		\param pos Posición donde mover el cursor
+		\return Devuelve true si la posición es válida
+		*/
         bool goTo(int pos);
 
+        /*!
+		\brief Situa el puntero en el elemento proporcionado
+		\param item Elemento a buscar en la lista
+		\return Devuelve false si no lo encuentra
+		*/
         bool search(T item);
 
+        /*!
+		\brief Devuelve un puntero al elemento donde apunta el cursor
+		\return Devuelve el puntero
+		*/
         T* getItem() const { return cursor_->getItem(); }
 
+        /*!
+		\brief Devuelve un puntero al elemento siguiente donde apunta el cursor
+		\return Devuelve el puntero
+		*/
         T* getPrev() const;
 
+        /*!
+		\brief Devuelve unpuntero al elemento anterior donde apunta el cursor
+		\return Devuelve el puntero
+		*/
         T* getNext() const;
 
+        /*!
+		\brief Inserta el elemento proporcionado antes del elemento al cual
+		        apunta el cursor
+		\param item Elemento a insertar
+		*/
         void insertBefore(T const& item);
 
+        /*!
+		\brief Inserta el elemento proporcionado después del elemento al cual
+		        apunta el cursor
+		\param item Elemento a insertar
+		*/
         void insertAfter(T const& item);
 
+        /// Elimina el elemento al cual apunta el cursor
         void removeItem();
 
 
 }; // Fin clase Lista
-
-/*! 
-\brief Comprueba si la lista está vacía.
-\pre Ninguna
-\warning Método privado
-\return Valor booleano que indica el estado de la lista.
-\post Devuelve true si size() == 0
-\post Devuelve false si size() > 0
-*/
-template <class T>
-bool Lista<T>::next() {
-    if ( cursor_->getNext() == nullptr )
-        return false;
-        
-    cursor_ = cursor_->getNext();
-    pos_++;
-}
-
-/*! 
-\brief Comprueba si la lista está vacía.
-\pre Ninguna
-\warning Método privado
-\return Valor booleano que indica el estado de la lista.
-\post Devuelve true si size() == 0
-\post Devuelve false si size() > 0
-*/
-template <class T>
-bool Lista<T>::prev() {
-    if ( cursor_->getPrev() == nullptr )
-        return false;
-        
-    cursor_ = cursor_->getPrev();
-    pos_--;
-}
-
-/*! 
-\brief Comprueba si la lista está vacía.
-\pre Ninguna
-\return Valor booleano que indica el estado de la lista.
-\post Devuelve true si size() == 0
-\post Devuelve false si size() > 0
-*/
-template <class T>
-bool Lista<T>::isEmpty() const {
-    if (size_ == 0)
-        return true;
-    else 
-        return false;
-}
-
-template <class T>
-bool Lista<T>::goTo(int pos) {
-
-    // El cursor ya está en la posición proporcionada
-    if ( pos == pos_ )
-        return true;
-    // La posición proporcionada está fuera de los límites
-    if ( pos >= size_ || pos < 0 )
-        return false;
-        
-    if ( pos < pos_ ) {
-        while ( this->getPos() != pos ) {
-            this->next();
-        }
-        
-    } else {
-        while ( this->getPos() != pos ) {
-            prev();
-        }
-    }
-    
-    return true; // Finaliza con éxito
-    
-}
-
-template <class T>
-bool Lista<T>::search(T item) {
-    // Indica si se ha encontrado el nodo pasado por parámetro
-    bool encontrado = false;
-    
-    // Guarda el estado de la lista para restablecerlo al acabar
-    int prev_pos = this->getPos();
-    
-    // Situa el cursor para comenzar desde el principio de la lista
-    cursor_ = head_;
-    
-    // Pasa al node siguiente hasta que llegue al final de la lista
-    // o encuentre un nodo que coincida con el parámetro
-    while ( next() ) {
-        if ( *cursor_ == item )
-            encontrado;
-            break;
-    }
-    
-    // Devuelve la lista a su estado anterior
-    this->goTo(prev_pos);
-    
-    return encontrado;
-}
-
-template <class T>
-T* Lista<T>::getPrev() const {
-    
-    if ( cursor_->getPrev() == nullptr )
-        return nullptr;
-        
-    Node<T>* aux = cursor_->getPrev();
-        
-    return aux->getItem();
-}
-
-template <class T>
-T* Lista<T>::getNext() const {
-    
-    if ( cursor_->getNext() == nullptr )
-        return nullptr;
-        
-    Node<T>* aux = cursor_->getNext();
-    
-    return aux->getItem();
-}
-
-template <class T>
-void Lista<T>::insertBefore(T const& item) {
-    
-    // En el caso de que se inserte delante del nodo cabeza de lista
-    if ( cursor_ == head_ ) {
-        head_ = new Node<T>(nullptr, head_, new T(item));
-        
-    } else {    
-        Node<T>* aux; // Variable auxiliar para referenciar el nodo anterior
-        aux = cursor_->getPrev();
-        
-        // Crea el nuevo nodo y cambia el valor del puntero en el nodo anterior
-        aux->setNext(new Node<T>(aux, cursor_, new T(item) ));
-        
-        // Cambia el valor del puntero previo en el nodo siguiente al insertado
-        cursor_->setPrev(aux->getNext());
-    
-    }
-    
-    // Al insertar un nodo se incrementa el tamaño. Ya que se ha insertado 
-    // antes, incrementamos el valor de la posición del cursor en 1
-    size_++;
-    pos_++;
-}
-
-template <class T>
-void Lista<T>::insertAfter(T const& item) {
-    
-    // En el caso de que inserte después del último nodo de la lista
-    if ( cursor_->getNext() == nullptr ) {
-        
-        cursor_->setNext(new Node<T>(cursor_, nullptr, new T(item) ));
-        
-    } else {
-    
-        // Cambia el valor del puntero next en el nodo del cursor al del nuevo
-        // nodo creado. Cuyo puntero prev es el del cursor y next es el anterior
-        // que tenía el nodo del cursor
-        Node<T>* aux = cursor_->getNext();
-        aux->setPrev(new Node<T>(cursor_, aux, new T(item) ));
-        cursor_->setNext(aux->getPrev());
-        
-    }
-    
-    // Incrementa el tamaño al insertar aunque la posición del cursor
-    // permanece igual ya que se ha insertado después del cursor
-    size_++;
-}
-
-template <class T>
-void Lista<T>::removeItem() {
-
-    // Si el nodo a eliminar es la cabeza
-    if ( cursor_ == head_ ) {
-        head_ = cursor_->getNext();
-        head_->setPrev(nullptr);
-        delete *cursor_;
-        cursor_ = head_;
-        
-    // Cuando el nodo a eliminar es el último de la lista
-    } else if ( cursor_->getNext() == nullptr ) {
-        Node<T>* aux = cursor_->getPrev();
-        aux->setNext(nullptr);
-        delete *cursor_;
-        cursor_ = aux;
-        pos_--;
-        
-    } else {
-        Node<T>* aux = cursor_->getNext();
-        aux->setPrev(cursor_->getPrev());
-        aux = cursor_->getPrev();
-        aux->setNext(cursor_->getNext());
-        delete *cursor_;
-        cursor_ = aux;
-        pos_--;
-    }
-    
-    // Disminuimos el tamaño en 1
-    size_--;
-}
 } // Fin namespace ed
 #include "lista.cpp"
 #endif

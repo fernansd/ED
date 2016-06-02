@@ -1,4 +1,10 @@
+#include "lista.hpp"
+
 namespace ed {
+
+/*
+ *  Parte privada
+ */
 
 /*! 
 \brief Comprueba si la lista está vacía.
@@ -10,29 +16,43 @@ namespace ed {
 */
 template <class T>
 bool Lista<T>::next() {
+    if (pos_ == 0) {
+        cursor_ = head_->getNext();
+        pos_++;
+        return true;
+    }
+
+    assert(cursor_ != nullptr);
     if ( cursor_->getNext() == nullptr )
         return false;
         
     cursor_ = cursor_->getNext();
     pos_++;
+    return true;
 }
 
 /*! 
-\brief Comprueba si la lista está vacía.
-\pre Ninguna
+\brief Mueve el cursor de la lista al elemento anterior al cual apunta
+        actualmente el cursor.
 \warning Método privado
-\return Valor booleano que indica el estado de la lista.
-\post Devuelve true si size() == 0
-\post Devuelve false si size() > 0
+\return Valor booleano que valdrá false, si ya está el cursor en el inicio
+\post El cursor debe habe retrocedido una posición o devolver false
+        si ya está en la cabeza de la lista
 */
 template <class T>
 bool Lista<T>::prev() {
-    if ( cursor_->getPrev() == nullptr )
+    if ( cursor_ == head_ )
         return false;
         
     cursor_ = cursor_->getPrev();
     pos_--;
+    return true;
 }
+
+/*
+ *  Parte pública
+ */
+
 
 /*! 
 \brief Comprueba si la lista está vacía.
@@ -50,6 +70,16 @@ bool Lista<T>::isEmpty() const {
 }
 
 template <class T>
+bool Lista<T>::setPos(int pos) {
+    if ( pos >= size_ || pos < 0 ) {
+        return false;
+    } else {
+        this->pos_ = pos;
+        return true;
+    }
+}
+
+template <class T>
 bool Lista<T>::goTo(int pos) {
 
     // El cursor ya está en la posición proporcionada
@@ -58,8 +88,8 @@ bool Lista<T>::goTo(int pos) {
     // La posición proporcionada está fuera de los límites
     if ( pos >= size_ || pos < 0 )
         return false;
-        
-    if ( pos < pos_ ) {
+         
+    if ( pos > pos_ ) {
         while ( this->getPos() != pos ) {
             next();
         }
@@ -82,16 +112,18 @@ bool Lista<T>::search(T item) {
     // Guarda el estado de la lista para restablecerlo al acabar
     int prev_pos = this->getPos();
     
+    this->setPos(0);
     // Situa el cursor para comenzar desde el principio de la lista
     cursor_ = head_;
     
     // Pasa al node siguiente hasta que llegue al final de la lista
     // o encuentre un nodo que coincida con el parámetro
-    while ( next() ) {
-        if ( *(cursor_->getItem()) == item )
+    do {
+        if ( *(cursor_->getItem()) == item ) {
             encontrado = true;
             break;
-    }
+        }
+    } while ( next() );
     
     // Devuelve la lista a su estado anterior
     this->goTo(prev_pos);
@@ -124,6 +156,12 @@ T* Lista<T>::getNext() const {
 template <class T>
 void Lista<T>::insertBefore(T const& item) {
     
+    // Lista vacía
+    if (cursor_ == nullptr) {
+        cursor_ = new Node<T>(nullptr, nullptr, new T(item) );
+        head_ = cursor_;
+    }
+    
     // En el caso de que se inserte delante del nodo cabeza de lista
     if ( cursor_ == head_ ) {
         head_ = new Node<T>(nullptr, head_, new T(item));
@@ -148,6 +186,12 @@ void Lista<T>::insertBefore(T const& item) {
 
 template <class T>
 void Lista<T>::insertAfter(T const& item) {
+    
+    // Lista vacía
+    if (cursor_ == nullptr) {
+        cursor_ = new Node<T>(nullptr, nullptr, new T(item) );
+        head_ = cursor_;
+    }
     
     // En el caso de que inserte después del último nodo de la lista
     if ( cursor_->getNext() == nullptr ) {
@@ -193,7 +237,7 @@ void Lista<T>::removeItem() {
         aux->setPrev(cursor_->getPrev());
         aux = cursor_->getPrev();
         aux->setNext(cursor_->getNext());
-        delete *cursor_;
+        delete cursor_;
         cursor_ = aux;
         pos_--;
     }
