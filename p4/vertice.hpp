@@ -19,6 +19,8 @@ class Vertice {
 		int label_;
 
 	public:
+		/// Constructor por defecto que inicializa los datos a el dato por
+		/// defecto y la etiqueta a 0
 		Vertice() {
 			data_ = T();
 			label_ = 0;
