@@ -15,7 +15,9 @@ class Donante : public DonanteInterfaz {
 
     private:
         /// Datos sobre el nombre del donante [nombre, apellidos]
-        string nombre_, apellidos_;
+        string nombre_;
+        /// Apellidos del donante
+        string apellidos_;
         /// Datos sobre el grupo sanguíneo del donante
         string grupo_;
         /// Datos sobre el factor RH del donante
