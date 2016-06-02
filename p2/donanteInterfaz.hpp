@@ -8,6 +8,11 @@ using namespace std;
 
 namespace ed {
 
+/*!
+    \class DonanteInterfaz donanteInterfaz.hpp "./donanteInterfaz.hpp"
+    \brief Clase abstracta que define una interfaz de interacción con un tipo
+            Donante.
+*/
 class DonanteInterfaz {
     public:
     
@@ -100,12 +105,14 @@ class DonanteInterfaz {
         
         /*! 
 		\brief Escribe por pantalla los datos de un Donante. De la forma:\n
-				\tApellidos, Nombre\n \tGrupo: grupo\n \tFactorRH: factorRH\n
+				Apellidos, Nombre\n Grupo: grupo\n FactorRH: factorRH\n
 		\pre El Donante debe existir
 		\post Ninguna
 		\sa setNombre(), setApellidos(), setGrupo(), setFactorRH()
 		*/
         virtual void escribirDonante() = 0;
+        
+        virtual ~DonanteInterfaz() {}
 
 };
 }// Fin namespace ed

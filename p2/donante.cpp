@@ -60,7 +60,12 @@ void Donante::leerDonante() {
 	\sa ostream &operator<<(ostream &stream, Donante &d)
 */       
 void Donante::escribirDonante() {
-    cout << *this;
+    printf("\nDatos del donante:\n");
+    
+    printf("\tNombre: %s\n", this->getNombre().c_str());
+    printf("\tApellidos: %s\n", this->getApellidos().c_str());
+    printf("\tGrupo: %s\n", this->getGrupo().c_str());
+    printf("\tFactor RH: %s\n", this->getFactorRH().c_str());
 }
 
 /*! 
@@ -72,7 +77,10 @@ void Donante::escribirDonante() {
 */  
 Donante& Donante::operator=(Donante const &d) {
 
-    *this = d;
+    this->nombre_ = d.nombre_;
+    this->apellidos_ = d.apellidos_;
+    this->grupo_ = d.grupo_;
+    this->factor_ = d.factor_;
     return *this;
 }
         
@@ -133,22 +141,25 @@ istream &operator>>(istream &stream, Donante &d) {
     cout << "Introduce los apellidos: ";
     cin >> aux;
     d.setApellidos(aux);
+    cin.clear();
+    cin.ignore(10000,'\n');
     
-    cout << "Introduce el grupo: ";
+    
+    cout << "Introduce el grupo [0, A, B, AB]: ";
     cin >> aux;
     exito = d.setGrupo(aux);
-    // En caso de que no se introduzca un valor adecuado lo indica y proporciona
-    // cuales son los valores posibles para la variable grupo
+    // Si no se consigue poner le valor de grupo, se pide otro valor al usuario
     while (exito == false) {
-    
+        cin.clear();
+        cin.ignore(10000,'\n');
         cout << "Valor incorrecto para el grupo" << endl;
         cout << "Los valores posibles son: [0, A, B, AB]" << endl;
-        cout << "Introduce un nuevo valor: " << endl;
+        cout << "Introduce un nuevo valor: ";
         cin >> aux;
         exito = d.setGrupo(aux);
     }
     
-    cout << "Introduce el factor RH: ";
+    cout << "Introduce el factor RH [negativo,positivo]: ";
     cin >> aux;
     exito = d.setFactorRH(aux);
     // En caso de que no se introduzca un valor adecuado lo indica y proporciona
@@ -157,7 +168,7 @@ istream &operator>>(istream &stream, Donante &d) {
     
         cout << "Valor incorrecto para factor RH" << endl;
         cout << "Los valores posibles son: [negativo, positivo]" << endl;
-        cout << "Introduce un nuevo valor: " << endl;
+        cout << "Introduce un nuevo valor: ";
         cin >> aux;
         exito = d.setFactorRH(aux);
     }

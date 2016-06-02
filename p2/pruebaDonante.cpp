@@ -2,7 +2,7 @@
 #include <cstdio>
 
 // Cabecera que contiene las macros para dar formato a la salida de terminal
-#include "../menu/macros.hpp"
+#include "macros.hpp"
 
 #include "donante.hpp"
 
@@ -176,7 +176,8 @@ void opcionModificarDonante(Donante &d) {
                 string str;
                 LUGAR(10,10);
                 printf("Introduce el nombre: ");
-                cin >> str;
+                getline(cin, str);
+                cin.ignore(256,'\n');
                 d.setNombre(str);
                 break;
             }
@@ -184,7 +185,8 @@ void opcionModificarDonante(Donante &d) {
                 string str;
                 LUGAR(10,10);
                 printf("Introduce los apellidos: ");
-                cin >> str;
+                getline(cin, str);
+                cin.ignore(256,'\n');
                 d.setApellidos(str);
                 break;
             }
@@ -192,7 +194,7 @@ void opcionModificarDonante(Donante &d) {
                 string str;
                 LUGAR(10,10);
                 printf("Introduce el nuevo grupo: ");
-                cin >> str;
+                getline(cin, str);
                 d.setGrupo(str);
                 break;
             }
@@ -200,7 +202,7 @@ void opcionModificarDonante(Donante &d) {
                 string str;
                 LUGAR(10,10);
                 printf("Introduce el nuevo factorRH: ");
-                cin >> str;
+                getline(cin, str);
                 d.setFactorRH(str);
                 break;
             }      
@@ -250,18 +252,6 @@ void opcionCompararDonantes(Donante &d1, Donante &d2) {
         printf("El primer donante es mayor que el segundo.");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
